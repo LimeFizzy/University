@@ -12,20 +12,18 @@ int main(){
     
     while (1>0){
         printf("Iveskite sveikaji skaiciu.\n");
-        if(scanf("%d", &temp)){
-            newNum = temp;
-            sum += temp;
+        if(scanf("%d", &newNum)){
+            //newNum = temp;
+            sum += newNum;
             counter ++;
-            newNum = temp;
             if(newNum<previousNum) break;
-            previousNum = temp;
+            previousNum = newNum;
         }
         else{
             printf("Neteisinga ivestis! Iveskite sveikaji skaiciu.\n");
             while(getchar() != '\n');
         }
     }
-    //Output
     printf("Sekos nariu skaicius: %.0lf\n", counter);
     printf("Sekos nariu aritmetinis vidurkis: %.2lf\n", sum/counter);
     return 0;
