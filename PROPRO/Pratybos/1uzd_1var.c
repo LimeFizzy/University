@@ -15,7 +15,7 @@ int main(){
         if(scanf("%d", &temp)){
             newNum = temp;
             sum += temp;
-            counter +=1;
+            counter ++;
             newNum = temp;
             if(newNum<previousNum) break;
             previousNum = temp;
