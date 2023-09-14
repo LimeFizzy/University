@@ -8,19 +8,18 @@
 
 int main(){
     double sum = 0, counter = 0;
-    int previousNum = INT_MIN, newNum, temp;
+    int previousNum = INT_MIN, newNum;
     
     while (1>0){
         printf("Iveskite sveikaji skaiciu.\n");
         if(scanf("%d", &newNum)){
-            //newNum = temp;
             sum += newNum;
             counter ++;
             if(newNum<previousNum) break;
             previousNum = newNum;
         }
         else{
-            printf("Neteisinga ivestis! Iveskite sveikaji skaiciu.\n");
+            printf("Neteisinga ivestis!\n");
             while(getchar() != '\n');
         }
     }
