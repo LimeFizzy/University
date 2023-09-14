@@ -1,3 +1,8 @@
+//LSP numeris - 2312091
+//el. pastas - leonardas.sinkevicius@mif.stud.vu.lt
+//Uzduoties numeris - 1
+//Uzduoties variantas - 1
+
 #include <stdio.h>
 #include <limits.h>
 
