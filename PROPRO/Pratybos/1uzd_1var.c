@@ -12,7 +12,7 @@ int main(){
     
     while (1>0){
         printf("Iveskite sveikaji skaiciu.\n");
-        if(scanf("%d", &newNum)){
+        if(scanf("%d", &newNum)== 1 && (getchar() == '\n')){
             sum += newNum;
             counter ++;
             if(newNum<previousNum) break;
