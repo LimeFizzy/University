@@ -5,7 +5,7 @@ int main(){
     double x, y, z;
     while(1>0){
         printf("Iveskite kintamojo x reiksme: ");
-        if((scanf("%d", &x)==1) && (getchar()=='\n'))break;
+        if((scanf("%lf", &x)==1) && (getchar()=='\n'))break;
         else{
             printf("Neteisinga ivestis\n");
             while(getchar() != '\n');
@@ -13,7 +13,7 @@ int main(){
     }
     while(1>0){
         printf("Iveskite kintamojo y reiksme: ");
-        if((scanf("%d", &y)==1) && (getchar()=='\n'))break;
+        if((scanf("%lf", &y)==1) && (getchar()=='\n'))break;
         else{
             printf("Neteisinga ivestis\n");
             while(getchar() != '\n');
@@ -21,7 +21,7 @@ int main(){
     }
     while(1>0){
         printf("Iveskite kintamojo z reiksme: ");
-        if((scanf("%d", &z)==1) && (getchar()=='\n'))break;
+        if((scanf("%lf", &z)==1) && (getchar()=='\n'))break;
         else{
             printf("Neteisinga ivestis\n");
             while(getchar() != '\n');
