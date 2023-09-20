@@ -7,7 +7,7 @@ int main(){
         printf("Iveskite kintamojo x reiksme: ");
         if((scanf("%lf", &x)==1) && (getchar()=='\n'))break;
         else{
-            printf("Neteisinga ivestis\n");
+            printf("Neteisinga ivestis. Iveskite skaiciu formatu a.b.\n");
             while(getchar() != '\n');
         }
     }
@@ -15,7 +15,7 @@ int main(){
         printf("Iveskite kintamojo y reiksme: ");
         if((scanf("%lf", &y)==1) && (getchar()=='\n'))break;
         else{
-            printf("Neteisinga ivestis\n");
+            printf("Neteisinga ivestis. Iveskite skaiciu formatu a.b.\n");
             while(getchar() != '\n');
         }
     }
@@ -23,7 +23,7 @@ int main(){
         printf("Iveskite kintamojo z reiksme: ");
         if((scanf("%lf", &z)==1) && (getchar()=='\n'))break;
         else{
-            printf("Neteisinga ivestis\n");
+            printf("Neteisinga ivestis. Iveskite skaiciu formatu a.b.\n");
             while(getchar() != '\n');
         }
     }
