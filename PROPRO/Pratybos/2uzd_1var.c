@@ -13,10 +13,17 @@
 int main(){
     int N;
     scanf("%d", &N);
-    int numbers[N*N];
+    int numbers[N*N], numbers2[N*N];
     for(int i=1; i<=pow(N, 2); i++) {
         numbers[i-1]=i;
-        printf("%d ", numbers[i-1]);
+    }
+    int num=0;
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            printf("%2d ", numbers[num]);
+            num++;
+        }
+        printf("\n");
     }
     return 0;
 }

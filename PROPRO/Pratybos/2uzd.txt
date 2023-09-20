@@ -1,0 +1,20 @@
+0i0j 0i1j 0i2j 0i3j
+1j0j 1i1j 1i2j 1i3j
+2i0j 2i1j 2i2j 2i3j
+3i0j 3i1j 3i2j 3i3j
+
+ 1  2  3  4
+12 13 14  5
+11 16 15  6
+10  9  8  7
+
+ 1  2  3  4  5
+16 17 18 19  6
+15 24 25 20  7
+14 23 22 21  8
+13 12 11 10  9
+  pirmieji N skaiciu: 0...N
+  sekantys N-1(i) skaiciu: N+i*N
+  sekantys N-1(i) skaiciu: N+(N-1)*N - (N-i)   i<5
+  sekantys N-2(j) skaiciu: N*(N-1)+1-N*j       j<4
+  sekantys N-2(j) skaiciu: 
