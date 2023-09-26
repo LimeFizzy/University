@@ -45,15 +45,15 @@ int main(int argc, char *argv[]) {
             Student s = students[i]; // store data for each student in s
             
             if(1){ // *** first filter, conditions on the student
-                printf("%s%s%d%f%d", s.name, s.surname, s.course, s.average, s.load); // print student data
+                printf("%-10s %-10s %dc.,   avg. %4.1f, %d courses", s.name, s.surname, s.course, s.average, s.load); // print student data
                 int anotherDemo = 0; // for counting courses/grades
                 for (int i = 0; i < s.load; ++i){ // process each course taken by the student
                     if(1){ // *** second filter, conditions on the course/grade
                         ++anotherDemo; // counting courses
-                        printf("%s%d", s.courses[i], s.grades[i]);
+                        printf(", %s %d", s.courses[i], s.grades[i]);
                     }
                 }
-                printf("%s\n", s.languages);
+                printf(", languages: %s\n", s.languages);
                         
                 if (anotherDemo == s.load) // *** third filter, various other conditions            
                     ++counterDemo; // counting studfents
