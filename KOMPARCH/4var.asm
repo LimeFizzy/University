@@ -28,6 +28,7 @@ Start:
     ;Pasiruosimas konvertavimui
     mov si, offset buffer
     add si, 1             ;pridedam viena, kad suzinot kiek simboliu gavome
+
 StartLoop:
     inc si
     mov ax, 0
