@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
                     ++s.counter;
             }
 
-            if(s.counter==s.load){ // *** first filter, conditions on the student
+            if(s.counter==s.load && s.counter!=0){ // *** first filter, conditions on the student
                 printf("%-10s %-10s %dc.,   avg. %4.1f, %d courses", s.name, s.surname, s.course, s.average, s.load); // print student data
                 int anotherDemo = 0; // for counting courses/grades
                 for (int i = 0; i < s.load; ++i){ // process each course taken by the student
