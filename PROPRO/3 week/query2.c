@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < size; ++i){ // process all the student records in database
             Student s = students[i]; // store data for each student in s
             
-            if(1){ // *** first filter, conditions on the student
+            if(s.average>=5){ // *** first filter, conditions on the student
                 printf("%-10s %-10s %dc.,   avg. %4.1f, %d courses", s.name, s.surname, s.course, s.average, s.load); // print student data
                 int anotherDemo = 0; // for counting courses/grades
                 for (int i = 0; i < s.load; ++i){ // process each course taken by the student
