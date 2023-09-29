@@ -9,6 +9,7 @@
     new_line db 13, 10, "$"
     space db " ", "$"
     buffer db 10, ?, 10 dup(0)
+    notification db "Ivestu simboliu ASCII kodai:", 13, 10, "$"
 .code
 Start:
     mov ax, @data
@@ -25,14 +26,17 @@ Start:
     mov ah, 09h
     mov dx, offset new_line
     int 21h
+
+    mov dx, offset notification
+	int 21h
     ;Pasiruosimas konvertavimui
     mov si, offset buffer
-    add si, 1             ;pridedam viena, kad suzinot kiek simboliu gavome
+    add si, 1
 
 StartLoop:
     inc si
     mov ax, 0
-    mov al, [ds:si]       ;issaugom kiek simboliu buvo ivesta registre CX
+    mov al, [ds:si]
     cmp al, 13
     JE Final
     mov dx, 0
