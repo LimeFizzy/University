@@ -38,24 +38,47 @@ StartLoop:
     mov dx, 0
     cmp al, 33
     JB Error
+    cmp ax, 100
+    jb Convert2
+    jmp Convert3
 
-Convert:
+Convert2:
     mov dl, 10
     div dl
     add al, 30h
     push ax
+    
     mov dl, al
     mov ah, 2
     int 21h
+    
     pop ax
     add ah, 30h
     mov dl, ah
+    
     mov ah, 2
     int 21h
+    
     mov ah, 09h
     mov dx, offset space
     int 21h
+    
     JMP StartLoop
+
+Convert3:
+    mov dl, 100
+    div dl
+    push ax
+    add al, 30h
+    
+    mov dl, al
+    mov ah, 2
+    int 21h
+
+    pop ax
+    mov al, ah
+    mov ah, 0
+    jmp Convert2
 
 Final:
     mov ah, 4Ch
