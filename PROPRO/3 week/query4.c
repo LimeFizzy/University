@@ -40,15 +40,15 @@ int main(int argc, char *argv[]) {
         // MODIFY CODE BELOW
         
         int counterDemo = 0; // for counting students
-        int anotherDemo = 0; // for counting courses/grades
-
+        
         for (int i = 0; i < size; ++i){ // process all the student records in database
             Student s = students[i]; // store data for each student in s
             
-            if(1){ // *** first filter, conditions on the student
+            if(s.course==2 || s.course==3){ // *** first filter, conditions on the student
                 printf("%-10s %-10s %dc.,   avg. %4.1f, %d courses", s.name, s.surname, s.course, s.average, s.load); // print student data
+                int anotherDemo = 0; // for counting courses/grades
                 for (int i = 0; i < s.load; ++i){ // process each course taken by the student
-                    if(s.grades[i]==10){ // *** second filter, conditions on the course/grade
+                    if(1){ // *** second filter, conditions on the course/grade
                         ++anotherDemo; // counting courses
                         printf(", %s %d", s.courses[i], s.grades[i]);
                     }
@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
                 printf(", languages: %s\n", s.languages);
                         
                 if (anotherDemo == s.load) // *** third filter, various other conditions            
-                    ++counterDemo; // counting students
+                    ++counterDemo; // counting studfents
             }
         }
         printf("Filter applied, %d students found\n", counterDemo); // how many passed the filters
