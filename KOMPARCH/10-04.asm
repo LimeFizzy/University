@@ -31,11 +31,10 @@ Start:
 StartLoop:
     mov ax, 0
     inc si
-    mov al, [ds:si]
-    cmp al, 13
+    mov dl, [ds:si]
+    cmp dl, 13
     JE Final
-    
-    mov dl, al
+
     mov ah, 2
     int 21h
     
