@@ -9,6 +9,7 @@ int main(){
     printf("Programa apskaiciuoja 3 sveikuju skaiciu DBD ir MBK.\n");
     printf("Iveskite sveikuosius skaicius a, b ir c:\n");
     scanf("%d %d %d", &a, &b, &c);
+    printf("Ivestis sekmingai irasyta.\n");
     //Apakaiciujamas DBD
     min = MinNum(a, b, c);
     while (DBD==0){

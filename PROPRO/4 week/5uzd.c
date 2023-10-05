@@ -10,10 +10,12 @@ int main(){
     printf("Programa apskaiciuoja ivestos skaiciu sekos nariu suma, vidurki, maziausia ir didziausia reiksmes.\n");
     printf("Iveskite kiek bus sekos nariu.\n");
     scanf("%d", &n);
+    printf("Seka tures %d nariu.\n", n);
     double Numbers[n];
     for(int i=0; i<n; ++i){
         printf("Iveskite %d-aji sekos nari:\n", i+1);
         scanf("%lf", &Numbers[i]);
+        printf("%d-asis sekos narys sekmingai irasytas.\n");
         summ += Numbers[i];
     }
     avg = summ/n;

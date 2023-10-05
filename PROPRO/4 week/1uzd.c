@@ -6,6 +6,7 @@ int main(){
     printf("Programa sprendzia kvadratines lygtis.\n");
     printf("Iveskite lygties koeficientus a, b ir c:\n");
     scanf("%lf %lf %lf", &a, &b, &c);
+    printf("Ivestis sekmingai irasyta.\n");
 
     if(a!=0){
         D = sqrt(pow(b,2) - 4*a*c);
