@@ -8,12 +8,10 @@
 #include <stdio.h>
 #include <math.h>
 
-
-
 int main(){
     int N;
     scanf("%d", &N);
-    int numbers[N*N], numbers2[N*N];
+    int numbers[N*N], numbers2[N*N];   //Reikalingi dvimaciai masyvai
     for(int i=1; i<=pow(N, 2); i++) {
         numbers[i-1]=i;
     }
