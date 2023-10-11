@@ -46,6 +46,7 @@ int main(){
         for(int j=0; j<N; ++j){
             printf("%4d", numbers[i][j]);
         }
+        printf("\n");
     }
 
     return 0;
