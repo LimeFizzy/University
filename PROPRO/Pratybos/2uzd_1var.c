@@ -9,19 +9,44 @@
 #include <math.h>
 
 int main(){
-    int N;
+    printf("Programa nuskaito viena sveikaji skaiciu N ir atspasdina skaicius nuo 1 iki N^2 matricoje uzpilditoje spirale.\n");
+    int N, newnum=1, limit=0;
+    printf("Iveskite svekaji skaiciu N\n");
     scanf("%d", &N);
-    int numbers[N*N], numbers2[N*N];   //Reikalingi dvimaciai masyvai
-    for(int i=1; i<=pow(N, 2); i++) {
-        numbers[i-1]=i;
-    }
-    int num=0;
-    for(int i=0; i<N; i++){
-        for(int j=0; j<N; j++){
-            printf("%2d ", numbers[num]);
-            num++;
+    int numbers[N][N];
+    while(1){
+        int i=0, j=1;
+        for(; i<N; ++i){
+            numbers[i][j] = newnum;
+            ++newnum;
+            if(newnum == (N*N))
+                break;
         }
-        printf("\n");
+        for(; j<N; ++j){
+            numbers[i][j] = newnum;
+            ++newnum;
+            if(newnum == (N*N))
+                break;
+        }
+        for(; i>0; --i){
+            numbers[i][j] = newnum;
+            ++newnum;
+            if(newnum == (N*N))
+                break;
+        }
+        for(; j > (0+limit); --j){
+            numbers[i][j] = newnum;
+            ++newnum;
+            if(newnum == (N*N))
+                break;
+        }
     }
+
+    for(int i=0; i<N; ++i){
+        for(int j=0; j<N; ++j){
+            printf("%4d", numbers[i][j]);
+        }
+    }
+
     return 0;
 }
