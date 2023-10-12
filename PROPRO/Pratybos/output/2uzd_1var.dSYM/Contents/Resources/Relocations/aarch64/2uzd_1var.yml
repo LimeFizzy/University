@@ -2,6 +2,7 @@
 triple:          'arm64-apple-darwin'
 binary-path:     '/Users/leonardassinkevicius/Documents/University/PROPRO/Pratybos/output/2uzd_1var'
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003C38, symSize: 0x2C8 }
-  - { offsetInCU: 0x41, offset: 0x41, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003C38, symSize: 0x2C8 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x1000039AC, symSize: 0x240 }
+  - { offsetInCU: 0x41, offset: 0x41, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x1000039AC, symSize: 0x240 }
+  - { offsetInCU: 0xC8, offset: 0xC8, size: 0x8, addend: 0x0, symName: _FillSpiral, symObjAddr: 0x240, symBinAddr: 0x100003BEC, symSize: 0x288 }
 ...
