@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <math.h>
 
-void FillSpiral(int n, int numbers[n][n]);
+void FillMatrix(int n, int matrix[n][n]);
 
 int main(){
     printf("Programa nuskaito viena teigiama sveikaji skaiciu N ir atspasdina skaicius nuo 1 iki N^2 matricoje uzpilditoje spirale.\n");
@@ -28,12 +28,12 @@ int main(){
             printf("Neteisinga ivestis! Iveskite teigiama sveikaji skaiciu.\n");
         }
     }
-    int numbers[n][n];
-    FillSpiral(n, numbers);
+    int matrix[n][n];
+    FillMatrix(n, matrix);
 
     for(int i=0; i<n; ++i){
         for(int j=0; j<n; ++j){
-            printf("%4d", numbers[i][j]);
+            printf("%4d", matrix[i][j]);
         }
         printf("\n");
     }
@@ -41,7 +41,7 @@ int main(){
     return 0;
 }
 
-void FillSpiral(int n, int numbers[n][n]){
+void FillMatrix(int n, int matrix[n][n]){
     int value = 1;
     int start_col_ind = 0, start_row_ind = 0;
     int final_col_ind = n, final_row_ind = n;
@@ -49,25 +49,25 @@ void FillSpiral(int n, int numbers[n][n]){
     while(start_col_ind < final_col_ind && start_row_ind < final_row_ind){
         //Fill the first row of the remaining
         for(int i = start_col_ind; i < final_col_ind; ++i){
-            numbers[start_row_ind][i] = value++;
+            matrix[start_row_ind][i] = value++;
         }
         ++start_row_ind;
         //Fill the last column of the remaining
         for(int i = start_row_ind; i < final_row_ind; ++i){
-            numbers[i][final_col_ind-1] = value++;
+            matrix[i][final_col_ind-1] = value++;
         }
         --final_col_ind;
         //Fill the last row of the remaining
         if(start_row_ind < final_row_ind){
             for(int i = final_col_ind-1; i >= start_col_ind; --i){
-                numbers[final_row_ind-1][i] = value++;
+                matrix[final_row_ind-1][i] = value++;
             }
             --final_row_ind;
         }
         //Fill the first column of the remaining
         if(start_col_ind < final_col_ind){
             for(int i = final_row_ind-1; i >= start_row_ind; --i){
-                numbers[i][start_col_ind] = value++;
+                matrix[i][start_col_ind] = value++;
             }
             ++start_col_ind;
         } 
