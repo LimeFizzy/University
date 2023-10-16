@@ -8,17 +8,27 @@
 #include <stdio.h>
 #include <math.h>
 
+int Validation(int x);
 void FillMatrix(int n, int matrix[n][n]);
+void Print(int n, int matrix[n][n]);
 
 int main(){
     printf("Programa nuskaito viena teigiama sveikaji skaiciu N ir atspasdina skaicius nuo 1 iki N^2 matricoje uzpilditoje spirale.\n");
-    int n;
+    int n = 0;
     //Validation
+    n = Validation(n);
+    int matrix[n][n];
+    FillMatrix(n, matrix);
+    Print(n, matrix);
+    return 0;
+}
+
+int Validation(int x){
     while (1){
         printf("Iveskite sveikaji skaiciu.\n");
-        if(scanf("%d", &n)== 1 && (getchar() == '\n')){
-            if(n > 0){
-                printf("Skaicius %d sekmingia nuskaitytas.\n", n);
+        if(scanf("%d", &x)== 1 && (getchar() == '\n')){
+            if(x > 0){
+                printf("Skaicius %d sekmingia nuskaitytas.\n", x);
             break;
             }
             else
@@ -28,18 +38,10 @@ int main(){
             printf("Neteisinga ivestis! Iveskite teigiama sveikaji skaiciu.\n");
         }
     }
-    int matrix[n][n];
-    FillMatrix(n, matrix);
 
-    for(int i=0; i<n; ++i){
-        for(int j=0; j<n; ++j){
-            printf("%4d", matrix[i][j]);
-        }
-        printf("\n");
-    }
-
-    return 0;
+    return x;
 }
+
 
 void FillMatrix(int n, int matrix[n][n]){
     int value = 1;
@@ -71,5 +73,14 @@ void FillMatrix(int n, int matrix[n][n]){
             }
             ++start_col_ind;
         } 
+    }
+}
+
+void Print(int n, int matrix[n][n]){
+    for(int i=0; i<n; ++i){
+        for(int j=0; j<n; ++j){
+            printf("%4d", matrix[i][j]);
+        }
+        printf("\n");
     }
 }
