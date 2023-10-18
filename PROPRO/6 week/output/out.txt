@@ -1,0 +1,1 @@
+Skaiciaus 12 faktorialas yra 479001600.

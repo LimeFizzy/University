@@ -36,6 +36,7 @@ int Validation(int x){
         }
         else{
             printf("Neteisinga ivestis! Iveskite teigiama sveikaji skaiciu.\n");
+            while(getchar() != '\n');
         }
     }
 
