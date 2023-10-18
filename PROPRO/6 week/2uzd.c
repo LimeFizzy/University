@@ -23,6 +23,7 @@ int main(){
             printf("Bandykite is naujo. Skaicius turi atitikti reziams [10;1000] ir tureti iki 3 skaitmenu po kablelio.\n");
         }
     }
+    fclose(input);
     return 0;
 }
 
