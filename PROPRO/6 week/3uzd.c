@@ -1,52 +1,81 @@
 #include <stdio.h>
 #include <ctype.h>
 
-void Validation(char numbers[], double values[3]);
+void Validation(double *values);
+int FindMid(double *values);
+void EnterFileName(char *fileName);
 
 int main(){
     printf("Programa nuskaito 3 skaicius parasytus vienoje eiluteje, atskirtus kabliataskiais, ");
     printf("randa vidurini pagal reiksme skaiciu ir atspausdina ji tekstiniame faile, ");
     printf("kurio pavadinima iveda vartotojas.\n");
     printf("Iveskite 3 skaicius tokiu formatu: skaicius1;skaicius2;skaicius3\n");
-    char numbers[] = {0};
     double values[3];
-    Validation(numbers, values);
+    char fileName[] = {0};
+    Validation(values);
+    double midValue = values[FindMid(values)];
+    EnterFileName(fileName);
+    FILE* result = fopen(fileName, "w");
+    if(result == NULL){
+        printf("Tekstinis failas nebuvo sukurtas.\n");
+    }
+    else
+        printf("Failas su atsakymu buvo sekmingai sukurtas.\n");
+    fprintf(result, "Ivestu skaiciu vidurine reiksme yra %.2lf", midValue);
+    fclose(result);
     return 0;
 }
 
-void Validation(char numbers[], double values[3]){
-    double value;
-    char temp[] = {0};
-    int readSymbols = 0, counter = 1;    //counter of ';' symbols
-    int breakPlaces[4] = {-1};
-    scanf("%s", numbers);
-    for(int i = 0; numbers[i] != '\0'; ++i){
-        if(numbers[i] == ';'){
-            breakPlaces[counter] = i;
-            ++counter;
+void Validation(double *values){
+    int validInput = 0;
+    while(validInput != 1){
+        if((scanf("%lf;%lf;%lf", &values[0], &values[1], &values[2])==3) && getchar()=='\n'){
+            printf("Ivestis sekmingai nuskaityta!\n");
+            validInput = 1;
         }
-        ++readSymbols;
+        else{
+            printf("Klaidinga ivestis. Iveskite 3 skaicius tokiu formatu: skaicius1;skaicius2;skaicius3\n");
+            while(getchar() != '\n');
+        }
     }
-    if(counter !=3){
-        printf("Neteisinga ivestis. Iveskite 3 skaicius tokiu formatu: skaicius1;skaicius2;skaicius3\n");
+}
+
+int FindMid(double *values){
+    int max = values[0] < values[1] ? 1 : 0;
+    max = values[max] < values[2] ? 2 : max;
+
+    int min = values[0] < values[1] ? 0 : 1;
+    min = values[min] < values[2] ? min : 2;
+    int mid;
+    for(int i = 0; i < 3; ++i){
+        if((max != i) && (min != i))
+            mid = i;
     }
-    else if(!(isdigit(numbers[breakPlaces[2]+1]))){
-        printf("Neteisinga ivestis. Iveskite 3 skaicius tokiu formatu: skaicius1;skaicius2;skaicius3\n");
-    }
-    else{
-        breakPlaces[3] = readSymbols;
-        for(int i=0; i<3; ++i){
-            for(int j=breakPlaces[i]+1, k=0; j<breakPlaces[i+1]; ++j, ++k){
-                temp[k] = numbers[j];
-                printf("%c", temp[k]);
+    return mid;
+}
+
+void EnterFileName(char *fileName){
+    int validInput = 0;
+    int pointLoc = -1;
+    printf("Iveskite tekstinio failo i kuri norite issaugoti rezultata pavadinima. Pvz.: rez.txt\n");
+    while(validInput != 1){
+        
+        scanf("%s", fileName);
+        for(int i=0; fileName[i] != '\0'; ++i){
+            if(fileName[i] == '.'){
+                pointLoc = i;
             }
-            char temp[]={0};
-            sscanf(temp, "%lf", &value);
-            
-            printf(" ");
-            values[i] = value;
-            //printf("%lf ", value);
         }
-        //printf("Ivestis sekmingai irasyta.\n");
+
+        if(pointLoc == -1 || pointLoc == 0){
+            printf("Neteisingas failo pavadinimas. Iveskite failo pavadinima formatu: \"filename.txt\".\n");
+        }
+        else if((fileName[pointLoc+1]=='t') && (fileName[pointLoc+2]=='x') && (fileName[pointLoc+3]=='t')){
+            printf("Failo pavadinimas sekmingai nuskaitytas.\n");
+            validInput = 1;
+        }
+        else{
+            printf("Neteisingas failo pavadinimas. Iveskite failo pavadinima formatu: \"filename.txt\".\n");
+        }
     }
 }

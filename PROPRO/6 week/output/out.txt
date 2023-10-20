@@ -1,1 +1,1 @@
-Skaiciaus 12 faktorialas yra 479001600.
+Ivestu skaiciu vidurine reiksme yra 2.00
