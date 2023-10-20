@@ -3,7 +3,6 @@
 
 void Validation(int *year, int *month, int *day);
 int ConvertToWeekday(int year, int month, int day);
-int ConvertToWeekday2(int year, int month, int day);
 void FillWeekdaysArray(char days[][15]);
 
 int main(){
