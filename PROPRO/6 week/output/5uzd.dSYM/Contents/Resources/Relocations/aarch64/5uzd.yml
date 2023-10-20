@@ -1,0 +1,10 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/leonardassinkevicius/Documents/University/PROPRO/6 week/output/5uzd'
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003928, symSize: 0xC0 }
+  - { offsetInCU: 0x41, offset: 0x41, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003928, symSize: 0xC0 }
+  - { offsetInCU: 0x86, offset: 0x86, size: 0x8, addend: 0x0, symName: _ValidateEmail, symObjAddr: 0xC0, symBinAddr: 0x1000039E8, symSize: 0x294 }
+  - { offsetInCU: 0x11E, offset: 0x11E, size: 0x8, addend: 0x0, symName: _SaveDomain, symObjAddr: 0x354, symBinAddr: 0x100003C7C, symSize: 0x88 }
+  - { offsetInCU: 0x188, offset: 0x188, size: 0x8, addend: 0x0, symName: _PrintDomain, symObjAddr: 0x3DC, symBinAddr: 0x100003D04, symSize: 0x48 }
+...
