@@ -17,6 +17,7 @@ int main(){
 
 void Validation(int *year, int *month, int *day){
     int validInput = 0;
+    printf("Iveskite data YYYY-MM-DD formatu. ");
     while(validInput != 1){
         if((scanf("%d-%d-%d", year, month, day)==3) && getchar()=='\n'){
             if((*year > 1699) && (*year < 2400) && (*month > 0) && (*month < 13) && (*day > 0) && (*day < 32)){
