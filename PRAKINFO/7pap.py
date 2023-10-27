@@ -29,14 +29,13 @@ elif n%2==0 and b<0:
     print("Lyginio laipsnio sakni galime traukti tik is sveikojo skaiciaus.")
     sys.exit(0)
     
-validNum = 0
-while(validNum != 1):
-    for posak in range(1+b):
-        for daugiklis in range(b):
-            if pow(daugiklis,n) * posak == b:
-                a *= daugiklis
-                b = posak
-                validNum = 1
+
+for posak in range(1+b):
+    for daugiklis in range(b):
+        if pow(daugiklis,n) * posak == b:
+            a *= daugiklis
+            b = posak
+            break
 
 if a == 1:
     print(n, "√", b)
