@@ -9,20 +9,22 @@ def Validation(number):
         pass
     return value
 
+
+limit = 1000000
 print("N-tojo laipsnio saknies traukimo is skaiciaus programa.")
 a = input("Iveskite daugikli pries sakni (1 jei nera): ")
 a = Validation(a)
-if a == None:
+if a == None or a > limit:
     print("Netinkama vartotojo ivestis, reikia ivesti sveikaji skaiciu.")
     sys.exit(0)
 n = input("Iveskite saknies laipsni: ")
 n = Validation(n)
-if n == None or n < 2:
+if n == None or n < 2 or n > limit:
     print("Netinkama vartotojo ivestis, reikia ivesti sveikaji skaiciu, ne mazesni uz 2.")
     sys.exit(0)
 b = input("Iveskite posakni: ")
 b = Validation(b)
-if b == None:
+if b == None or b > limit:
     print("Netinkama vartotojo ivestis, reikia ivesti sveikaji skaiciu.")
     sys.exit(0)
 elif n%2==0 and b<0:
