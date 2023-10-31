@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int splitData(int array[], int arraySize, int split, int first[], int second[]);
+int splitData(int array[], int arraySize, int split, int *first, int *second);
 
 int main(){
     int *first = NULL, *second = NULL;
@@ -10,10 +10,10 @@ int main(){
     return 0;
 }
 
-int splitData(int array[], int arraySize, int split, int first[], int second[]){
+int splitData(int array[], int arraySize, int split, int *first, int *second){
     if(first == NULL && second == NULL && arraySize >=0 && split <= arraySize && split >= 0){
-        first = malloc(split * sizeof(int));
-        second = malloc((arraySize - split) * sizeof(int));
+        first = (int *)malloc(split * sizeof(int));
+        second = (int *)malloc((arraySize - split) * sizeof(int));
         
         for(int i = 0; i < split; ++i){
             first[i] = array[i];
