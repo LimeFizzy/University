@@ -1,0 +1,10 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/leonardassinkevicius/Documents/University/PROPRO/9 week/output/1uzd'
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003DCC, symSize: 0xD0 }
+  - { offsetInCU: 0x41, offset: 0x41, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003DCC, symSize: 0xD0 }
+  - { offsetInCU: 0x5A, offset: 0x5A, size: 0x8, addend: 0x0, symName: _printPoint, symObjAddr: 0xD0, symBinAddr: 0x100003E9C, symSize: 0x40 }
+  - { offsetInCU: 0x7E, offset: 0x7E, size: 0x8, addend: 0x0, symName: _createPoint, symObjAddr: 0x110, symBinAddr: 0x100003EDC, symSize: 0x2C }
+  - { offsetInCU: 0xC2, offset: 0xC2, size: 0x8, addend: 0x0, symName: _getDistance, symObjAddr: 0x13C, symBinAddr: 0x100003F08, symSize: 0x68 }
+...
