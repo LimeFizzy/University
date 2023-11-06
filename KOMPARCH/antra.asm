@@ -11,22 +11,20 @@ Start:
 	mov ax, @data
 	mov ds, ax
 
-	mov cx, 0
-    mov cl, [es:128]
-    mov bx, 130
-	cmp cx, 0
+	xor cx, cx
+    xor ah, ah
+    mov cl, [es:0080h]
+	cmp cx, 4
+	jbe Helpmsg
+	mov dx, [es:0082h]
+	cmp dx, "?/"
 	je Helpmsg
-	mov dl, [es:130]
-	cmp dl, '/'
-	je Helpmsg
-	mov dl, [es:131]
-	cmp dl, '?'
 	jne SkipHelp
-	JE Helpmsg
 
 SkipHelp:
+    xor di, di
+    mov bx, 82h
 	mov si, offset input
-	mov al, 0
 	call SaveArgument
 	mov si, offset string1
 	call SaveArgument
@@ -34,6 +32,16 @@ SkipHelp:
 	call SaveArgument
 	mov si, offset output
 	call SaveArgument
+
+    mov ah, 09h
+    mov dx, offset input
+    int 21h
+    mov dx, offset string1
+    int 21h
+    mov dx, offset string2
+    int 21h
+    mov dx, offset output
+    int 21h
 
 Final:
     mov ah, 4Ch
@@ -47,21 +55,35 @@ Helpmsg:
 
 SaveArgument PROC
 Begin:
-	mov dl, [es:bx]
-	cmp dl, 32
-	je Stop
-	mov [si], dl
+    int 3
+	mov dx, [es:bx]
 	inc bx
+    cmp dl, 20h
+	je StopSpace
+    cmp dl, 13
+    je StopEnter
+	mov byte ptr [si], dl
 	inc si
-	dec cx
-	cmp cx, 0
-	je Helpmsg
 	jmp Begin
-Stop:
-	mov [si], 0
-	inc bx
-	mov ax, 0
+StopSpace:
+    inc si
+    mov byte ptr [si], "$"
+    inc di
 	ret
+StopEnter:
+    inc si
+    mov byte ptr [si], "$"
+    inc di
+    cmp di, 4
+    jb Helpme
+    ret
+Helpme:
+    mov ah, 09h
+    mov dx, offset help
+    int 21h
+    mov ah, 4Ch
+    int 21h
+    ret
 SaveArgument ENDP
 
 
