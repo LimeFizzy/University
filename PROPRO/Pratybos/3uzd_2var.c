@@ -3,6 +3,8 @@
 #define WelcomeMsg "Sveiki, sita programa randa ir atspausina visus zodzius, kuries vienodai skaitosi is pradzios ir is galo.\n"
 #define AskForInput "Iveskite duomenu failo pavadinima. (pvz. duom.txt)\n"
 #define AskForOutput "Iveskite rezultato failo pavadinima. (pvz. rez.txt)\n"
+#define FileErrorMsg "Nepavyko atidaryti/surasti norimo failo.\n"
+#define FileOpenSuccess "Failas sekmingai atidarytas!\n"
 
 void EnterFileName(char *fileName){
     int validInput = 0;
@@ -27,6 +29,19 @@ void EnterFileName(char *fileName){
             printf("Neteisingas failo pavadinimas. Iveskite failo pavadinima formatu: \"filename.txt\".\n");
         }
     }
+}
+
+void FindPalindromes(char *input, char *output){
+    FILE *data = fopen(input, "r");
+    if(data == NULL){
+        printf("%s", FileErrorMsg);
+    }
+    else{                   // Pradzia darbo su teksto eilutemis
+        printf("%s", FileOpenSuccess);
+        char line[255] = {0};
+
+    }
+
 }
 
 int main(){
