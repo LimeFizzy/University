@@ -1,0 +1,14 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/leonardassinkevicius/Documents/University/PROPRO/9 week/output/2uzd'
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003CDC, symSize: 0x88 }
+  - { offsetInCU: 0x4D, offset: 0x4D, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003CDC, symSize: 0x88 }
+  - { offsetInCU: 0x75, offset: 0x75, size: 0x8, addend: 0x0, symName: _initStack, symObjAddr: 0x88, symBinAddr: 0x100003D64, symSize: 0x20 }
+  - { offsetInCU: 0x99, offset: 0x99, size: 0x8, addend: 0x0, symName: _push, symObjAddr: 0xA8, symBinAddr: 0x100003D84, symSize: 0x6C }
+  - { offsetInCU: 0xCB, offset: 0xCB, size: 0x8, addend: 0x0, symName: _pop, symObjAddr: 0x114, symBinAddr: 0x100003DF0, symSize: 0x54 }
+  - { offsetInCU: 0xF3, offset: 0xF3, size: 0x8, addend: 0x0, symName: _destroyStack, symObjAddr: 0x168, symBinAddr: 0x100003E44, symSize: 0x30 }
+  - { offsetInCU: 0x117, offset: 0x117, size: 0x8, addend: 0x0, symName: _printStack, symObjAddr: 0x198, symBinAddr: 0x100003E74, symSize: 0x88 }
+  - { offsetInCU: 0x157, offset: 0x157, size: 0x8, addend: 0x0, symName: _getStackSize, symObjAddr: 0x220, symBinAddr: 0x100003EFC, symSize: 0x18 }
+  - { offsetInCU: 0x17F, offset: 0x17F, size: 0x8, addend: 0x0, symName: _top, symObjAddr: 0x238, symBinAddr: 0x100003F14, symSize: 0x54 }
+...
