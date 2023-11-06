@@ -1,30 +1,43 @@
-LOCALS @@ ; Lokalios zymes prasideda @@
-.MODEL small ; Atminties modelis:
-				; 64K kodui ir 64K duomenims
+.MODEL small
 .STACK 256
 .DATA
 	help db "Sveiki, sita pragrama nuskaito 4 paramentus, duomenu faila, du eilutes fragmentus ir rezultatu faila. Duomenu faile visus pirmus fragmentus pakeicia antruoju ir isspausdina rezultatu faile.", 10, 13, "Iveskite paramentus pagal pavizdi: antra.exe duom.txt abcd EFG rez.txt", 10, 13, "$"
-    msg DB "Programos parametrai:"
-	msgLen = $-msg          ; Eilutes msg ilgis gaunamas is einamojo adreso ($) atemus jos pradzios adresa
+	input db 255 dup(0)
+	string1 db 255 dup(0)
+	string2 db 255 dup(0)
+	output db 255 dup(0)
 .CODE
-Strt:
-	push ds                 ; Issaugome steke PSP pradzios adresa
+Start:
 	mov ax, @data
 	mov ds, ax
-    mov cl, [es:80h]
-    cmp cl, 0
-    je Helpmsg
-	mov cx, (msgLen)
-	mov dx, OFFSET msg
-	call PrintBuf           ; Atspausdiname pranesima
-	pop ds
-	mov cl, [ds:80h]         ; Parametru eilutes ilgis (PSP su poslinkiu 80h)
-	xor ch, ch
-	mov dx, 81h              ; Parametru eilutes pradzios adresas
-	call PrintBuf
+
+	mov cx, 0
+    mov cl, [es:128]
+    mov bx, 130
+	cmp cx, 0
+	je Helpmsg
+	mov dl, [es:130]
+	cmp dl, '/'
+	je Helpmsg
+	mov dl, [es:131]
+	cmp dl, '?'
+	jne SkipHelp
+	JE Helpmsg
+
+SkipHelp:
+	mov si, offset input
+	mov al, 0
+	call SaveArgument
+	mov si, offset string1
+	call SaveArgument
+	mov si, offset string2
+	call SaveArgument
+	mov si, offset output
+	call SaveArgument
+
 Final:
-    mov ax, 04C00h
-	int 21h                 ; int 21,4C - programos pabaiga
+    mov ah, 4Ch
+	int 21h
 
 Helpmsg:
     mov ah, 09h
@@ -32,15 +45,24 @@ Helpmsg:
     int 21h
     JMP Final
 
-PrintBuf PROC
-	push ax                 ; Issaugome steke registrus,
-	push bx                 ; kurie keisis
-	mov ah, 40h
-	mov bx, 1
-	int 21h                 ; int 21,40 - isvedimas i faila ar irengini	
-	pop bx                  ; Atstatome issaugotus registrus
-	pop ax
+SaveArgument PROC
+Begin:
+	mov dl, [es:bx]
+	cmp dl, 32
+	je Stop
+	mov [si], dl
+	inc bx
+	inc si
+	dec cx
+	cmp cx, 0
+	je Helpmsg
+	jmp Begin
+Stop:
+	mov [si], 0
+	inc bx
+	mov ax, 0
 	ret
-PrintBuf ENDP
-;-------------------------------------------------------------------
-END Strt
+SaveArgument ENDP
+
+
+END Start
