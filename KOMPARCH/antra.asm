@@ -66,15 +66,12 @@ Begin:
 	inc si
 	jmp Begin
 StopSpace:
-    inc si
     mov byte ptr [si], "$"
     inc di
 	ret
 StopEnter:
-    inc si
     mov byte ptr [si], "$"
-    inc di
-    cmp di, 4
+    cmp di, 3
     jb Helpme
     ret
 Helpme:

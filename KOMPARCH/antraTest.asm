@@ -1,16 +1,21 @@
 .MODEL small
 .STACK 256
 .DATA
-	help db "Sveiki, sita pragrama nuskaito 4 paramentus, duomenu faila, du eilutes fragmentus ir rezultatu faila. Duomenu faile visus pirmus fragmentus pakeicia antruoju ir isspausdina rezultatu faile.", 10, 13, "Iveskite paramentus pagal pavizdi: antra.exe duom.txt abcd EFG rez.txt", 10, 13, "$"
-	input db 255 dup(0)
+	help db "Sveiki,", 10, 13, "iveskite paramentus pagal pavizdi: antra.exe duom.txt abcd EFG rez.txt", 10, 13, "$"
+	FileProblem db "Ivestas failas nebuvo rastas.", 10, 13, "Iveskite paramentus pagal pavizdi: antra.exe duom.txt abcd EFG rez.txt", 10, 13, "$"
+    trying db "All good", 10, 13, "$"
+    input db 255 dup(0)
+    inputFD dw, ?               ; Input Failo Deskriptorius
 	string1 db 255 dup(0)
 	string2 db 255 dup(0)
 	output db 255 dup(0)
+    outputFD dw, ?              ; Output Failo Deskriptorius
+    buffer db 50000 dup(?)
 .CODE
 Start:
 	mov ax, @data
 	mov ds, ax
-
+    
 	xor cx, cx
     xor ah, ah
     mov cl, [es:0080h]
@@ -33,15 +38,43 @@ SkipHelp:
 	mov si, offset output
 	call SaveArgument
 
-    mov ah, 09h
+    ; Bylos atidarimas skaitymui
+    xor ax, ax
+    mov ah, 3Dh
+    mov al, 00
     mov dx, offset input
     int 21h
-    mov dx, offset string1
+    jc MissingFile
+    mov inputFD, ax
+
+    ; Skaitymas
+    mov ah, 3Fh
+    mov bx, inputFD
+    mov cx, 175
+    mov dx, offset buffer
     int 21h
-    mov dx, offset string2
-    int 21h
+    push ax
+
+    ; Bylos sukurimas rasymui
+    mov ah, 3Ch
+    mov cx, 0
     mov dx, offset output
     int 21h
+    mov outputFD, ax
+
+    ; Rasymas
+    mov ah, 40h
+    mov bx, outputFD
+    pop ax
+    mov cx, ax
+    mov dx, offset buffer
+    int 21h
+
+    ; Bylos uzdarimas
+    mov ah, 3Eh
+    mov bx, outputFD
+    int 21h
+
 
 Final:
     mov ah, 4Ch
@@ -53,9 +86,15 @@ Helpmsg:
     int 21h
     JMP Final
 
+MissingFile:
+    mov ah, 09h
+    mov dx, offset FileProblem
+    int 21h
+    jmp Final
+
+
 SaveArgument PROC
 Begin:
-    int 3
 	mov dx, [es:bx]
 	inc bx
     cmp dl, 20h
@@ -66,15 +105,12 @@ Begin:
 	inc si
 	jmp Begin
 StopSpace:
-    inc si
-    mov byte ptr [si], "$"
+    mov byte ptr [si], 0
     inc di
 	ret
 StopEnter:
-    inc si
-    mov byte ptr [si], "$"
-    inc di
-    cmp di, 4
+    mov byte ptr [si], 0
+    cmp di, 3
     jb Helpme
     ret
 Helpme:
