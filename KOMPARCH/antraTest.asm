@@ -22,9 +22,6 @@ Start:
     mov cl, [es:0080h]
 	cmp cx, 4
 	jbe Helpmsg
-	mov dx, [es:0082h]
-	cmp dx, "?/"
-	je Helpmsg
 	jne SkipHelp
 
 SkipHelp:
