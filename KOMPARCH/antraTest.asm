@@ -16,7 +16,7 @@
 Start:
 	mov ax, @data
 	mov ds, ax
-    
+    ; ********** Argumentu tikrinimas **********
 	xor cx, cx
     xor ah, ah
     mov cl, [es:0080h]
@@ -25,6 +25,7 @@ Start:
 	jne SkipHelp
 
 SkipHelp:
+    ; ********** Argumentu irasymas i kintamuosius **********
     xor di, di
     mov bx, 82h
 	mov si, offset input
@@ -36,6 +37,7 @@ SkipHelp:
 	mov si, offset output
 	call SaveArgument
 
+    ; ********** Nuskaitymas / Irasymas **********
     ; Bylos atidarimas skaitymui
     xor ax, ax
     mov ah, 3Dh
@@ -44,7 +46,6 @@ SkipHelp:
     int 21h
     jc MissingFile
     mov inputFD, ax
-
     ; Skaitymas
     mov ah, 3Fh
     mov bx, inputFD
@@ -52,21 +53,18 @@ SkipHelp:
     mov dx, offset buffer
     int 21h
     push ax
-
     ; Bylos sukurimas rasymui
     mov ah, 3Ch
     mov cx, 0
     mov dx, offset output
     int 21h
     mov outputFD, ax
-
     ; Rasymas
     mov ah, 40h
     mov bx, outputFD
     pop cx
     mov dx, offset buffer
     int 21h
-
     ; Bylos uzdarimas
     mov ah, 3Eh
     mov bx, outputFD
