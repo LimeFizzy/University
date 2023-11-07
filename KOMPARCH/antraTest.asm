@@ -11,6 +11,7 @@
 	output db 255 dup(0)
     outputFD dw, ?              ; Output Failo Deskriptorius
     buffer db 50000 dup(?)
+    tempBuf db 255 dup(0)       ; Reikalingas kad issaugoti dalinai kartojamaji pradinio failo teksta
 .CODE
 Start:
 	mov ax, @data
@@ -50,7 +51,7 @@ SkipHelp:
     ; Skaitymas
     mov ah, 3Fh
     mov bx, inputFD
-    mov cx, 175
+    mov cx, 100
     mov dx, offset buffer
     int 21h
     push ax
@@ -65,8 +66,7 @@ SkipHelp:
     ; Rasymas
     mov ah, 40h
     mov bx, outputFD
-    pop ax
-    mov cx, ax
+    pop cx
     mov dx, offset buffer
     int 21h
 
@@ -74,7 +74,6 @@ SkipHelp:
     mov ah, 3Eh
     mov bx, outputFD
     int 21h
-
 
 Final:
     mov ah, 4Ch
