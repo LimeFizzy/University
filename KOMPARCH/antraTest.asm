@@ -7,6 +7,7 @@
     input db 255 dup(0)
     inputFD dw, ?               ; Input Failo Deskriptorius
 	string1 db 255 dup(0)
+    strLen db, ?
 	string2 db 255 dup(0)
 	output db 255 dup(0)
     outputFD dw, ?              ; Output Failo Deskriptorius
@@ -37,6 +38,7 @@ SkipHelp:
 	mov si, offset output
 	call SaveArgument
 
+
     ; ********** Nuskaitymas / Irasymas **********
     ; Bylos atidarimas skaitymui
     xor ax, ax
@@ -49,7 +51,7 @@ SkipHelp:
     ; Skaitymas
     mov ah, 3Fh
     mov bx, inputFD
-    mov cx, 100
+    mov cx, 200
     mov dx, offset buffer
     int 21h
     push ax
@@ -59,12 +61,15 @@ SkipHelp:
     mov dx, offset output
     int 21h
     mov outputFD, ax
+    
+    call TextManipulations
+    
     ; Rasymas
-    mov ah, 40h
-    mov bx, outputFD
-    pop cx
-    mov dx, offset buffer
-    int 21h
+;    mov ah, 40h
+;    mov bx, outputFD
+;    mov cx, 255
+;    mov dx, offset string1
+;    int 21h
     ; Bylos uzdarimas
     mov ah, 3Eh
     mov bx, outputFD
@@ -99,11 +104,9 @@ Begin:
 	inc si
 	jmp Begin
 StopSpace:
-    mov byte ptr [si], 0
     inc di
 	ret
 StopEnter:
-    mov byte ptr [si], 0
     cmp di, 3
     jb Helpme
     ret
@@ -115,6 +118,50 @@ Helpme:
     int 21h
     ret
 SaveArgument ENDP
+
+
+TextManipulations PROC
+    mov si, offset buffer
+    mov di, offset string1
+Compare:
+    pop bx
+    dec bx
+    cmp bx, 0
+    je Return
+    push bx
+    cmp si, di
+    jne Print
+    je NextSimbol
+
+Print:
+    mov di, offset string1
+    mov ah, 40h
+    mov bx, outputFD
+    mov cx, 1
+    mov dx, si
+    int 21h
+    inc si
+    jmp Compare
+
+PrintString:
+    mov ah, 40h
+    mov bx, outputFD
+    mov cx, 3
+    mov dx, offset string2
+    int 21h
+    jmp Compare
+
+NextSimbol:
+    inc di
+    cmp di, 0
+    inc si
+    je PrintString
+    jne Compare
+
+Return:
+    ret
+
+TextManipulations ENDP
 
 
 END Start
