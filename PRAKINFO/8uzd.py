@@ -8,13 +8,13 @@ Created on Wed Nov  1 18:46:31 2023
 import collections
 
 longestWord = ""
-symbols = [",", ".", "!", "?", ":", ";", "-", "/", "„", "“", "–", "(", ")", "[", "]", "\n", "\\"]
+symbols = [',', '.', '!', '?', ':', ';', '–', '/', '„', '“', '-', '(', ')', '[', ']', '\n', '\\', '=']
 f = open("Metai.txt", "r", encoding="utf8")
 
 wholeText = f.read()
 
 for symbol in symbols:
-    wholeText = wholeText.replace(symbol, " ")
+    wholeText = wholeText.replace(symbol, '')
 
 onlyWords = wholeText.split()
 onlyWords = [word.lower() for word in onlyWords]

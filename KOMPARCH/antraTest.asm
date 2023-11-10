@@ -3,16 +3,14 @@
 .DATA
 	help db "Sveiki,", 10, 13, "iveskite paramentus pagal pavizdi: antra.exe duom.txt abcd EFG rez.txt", 10, 13, "$"
 	FileProblem db "Ivestas failas nebuvo rastas.", 10, 13, "Iveskite paramentus pagal pavizdi: antra.exe duom.txt abcd EFG rez.txt", 10, 13, "$"
-    trying db "All good", 10, 13, "$"
     input db 255 dup(0)
     inputFD dw, ?               ; Input Failo Deskriptorius
 	string1 db 255 dup(0)
-    strLen db, ?
 	string2 db 255 dup(0)
 	output db 255 dup(0)
     outputFD dw, ?              ; Output Failo Deskriptorius
     buffer db 50000 dup(?)
-    tempBuf db 255 dup(0)       ; Reikalingas kad issaugoti dalinai kartojamaji pradinio failo teksta
+    tempBuf db 255 dup(?)       ; Reikalingas kad issaugoti dalinai kartojamaji pradinio failo teksta
 .CODE
 Start:
 	mov ax, @data
@@ -54,7 +52,7 @@ SkipHelp:
     mov cx, 200
     mov dx, offset buffer
     int 21h
-    push ax
+
     ; Bylos sukurimas rasymui
     mov ah, 3Ch
     mov cx, 0
@@ -64,12 +62,6 @@ SkipHelp:
     
     call TextManipulations
     
-    ; Rasymas
-;    mov ah, 40h
-;    mov bx, outputFD
-;    mov cx, 255
-;    mov dx, offset string1
-;    int 21h
     ; Bylos uzdarimas
     mov ah, 3Eh
     mov bx, outputFD
@@ -123,40 +115,53 @@ SaveArgument ENDP
 TextManipulations PROC
     mov si, offset buffer
     mov di, offset string1
-Compare:
-    pop bx
-    dec bx
-    cmp bx, 0
-    je Return
-    push bx
-    cmp si, di
-    jne Print
-    je NextSimbol
+    xor cx, cx
+    push cx
 
-Print:
-    mov di, offset string1
+Read:
+    mov ah, 3Fh
+    mov bx, inputFD
+    mov cx, 1
+    mov dx, si
+    int 21h    
+
+    cmp byte ptr [si], 0
+    je Return
+    mov al, byte ptr [si]
+    mov ah, byte ptr [di]
+    cmp al, ah
+    je CheckForString
+
     mov ah, 40h
     mov bx, outputFD
     mov cx, 1
     mov dx, si
     int 21h
     inc si
-    jmp Compare
+    mov di, offset string1
+    pop cx
+    xor cx, cx
+    push cx
+    jmp Read
+
+CheckForString:
+    pop cx
+    inc cx
+    inc di
+    cmp byte ptr [di], 0
+    je PrintString
+    inc si
+    push cx
+    jmp Read
 
 PrintString:
     mov ah, 40h
     mov bx, outputFD
-    mov cx, 3
+    mov cx, 3                           ; Kiek simboliu reik spausdinti
     mov dx, offset string2
     int 21h
-    jmp Compare
-
-NextSimbol:
-    inc di
-    cmp di, 0
     inc si
-    je PrintString
-    jne Compare
+    jmp Read
 
 Return:
     ret
