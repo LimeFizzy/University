@@ -11,6 +11,8 @@
 #define EndOfFile "Buvo pasiekta failo pabaiga.\n"
 #define WrongFileInput "Neteisingas failo pavadinimas. Iveskite failo pavadinima formatu: \"filename.txt\".\n"
 #define FileReadSuccess "Failo pavadinimas sekmingai nuskaitytas.\n"
+#define OutputError "Nepavyko sukurti/atidaryti rezultatu failo.\n"
+#define GoodByeMSG "Programa baige savo darba. Rezultato ieskokyte faile "
 
 void EnterFileName(char *fileName){
     int validInput = 0;
@@ -89,6 +91,11 @@ void FindPalindromes(char *input, char *output){
     }
     else{
         FILE *result = fopen(output, "w");
+        if(result == NULL){
+            printf("%s", OutputError);
+            return;
+        }
+
         printf("%s", FileOpenSuccess);
         
         while(fgets(line, MAX_ARR, data) != NULL){
@@ -136,7 +143,7 @@ int main(){
     EnterFileName(input);
     printf("%s", AskForOutput);
     EnterFileName(output);
-    
     FindPalindromes(input, output);
+    printf("%s%s.\n", GoodByeMSG, output);
     return 0;
 }
