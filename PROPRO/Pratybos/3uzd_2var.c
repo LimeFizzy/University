@@ -31,7 +31,7 @@ void EnterFileName(char *fileName){
     }
 }
 
-void FindPalindromes(char *input, char *output){
+/*void FindPalindromes(char *input, char *output){
     FILE *data = fopen(input, "r");
     if(data == NULL){
         printf("%s", FileErrorMsg);
@@ -42,7 +42,7 @@ void FindPalindromes(char *input, char *output){
 
     }
 
-}
+}*/
 
 int main(){
     char input[] = {0}, output[] = {0};

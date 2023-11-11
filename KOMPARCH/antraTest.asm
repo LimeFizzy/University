@@ -10,7 +10,7 @@
 	output db 255 dup(0)
     outputFD dw, ?              ; Output Failo Deskriptorius
     buffer db 50000 dup(?)
-    tempBuf db 255 dup(?)       ; Reikalingas kad issaugoti dalinai kartojamaji pradinio failo teksta
+    tempBuf db 255 dup(0)       ; Reikalingas kad issaugoti dalinai kartojamaji pradinio failo teksta
 .CODE
 Start:
 	mov ax, @data
@@ -161,6 +161,8 @@ PrintString:
     mov dx, offset string2
     int 21h
     inc si
+    xor cx, cx
+    push cx
     jmp Read
 
 Return:
