@@ -7,6 +7,7 @@
 #define AskForOutput "Iveskite rezultato failo pavadinima. (pvz. rez.txt)\n"
 #define FileErrorMsg "Nepavyko atidaryti/surasti norimo failo.\n"
 #define FileOpenSuccess "Failas sekmingai atidarytas!\n"
+#define EndOfFile "Buvo pasiekta failo pabaiga.\n"
 
 void EnterFileName(char *fileName){
     int validInput = 0;
@@ -35,18 +36,18 @@ void EnterFileName(char *fileName){
     
 }
 
-char** SeparateByWords(char *textLine){
-    int wordCounter = 0;
+char** SeparateByWords(char *textLine, int *wordCounter){
+    *wordCounter = 0;
     for(int i = 0; i < MAX_ARR; ++i){
         if(textLine[i] == ' '){
-            wordCounter++;
+            (*wordCounter)++;
         }    
     }
-    wordCounter++;
+    (*wordCounter)++;
     
     // Allocating 2D array for words in line
-    char **words = (char **)malloc(wordCounter * sizeof(char*));
-    for(int i = 0; i < wordCounter; ++i){
+    char **words = (char **)malloc(*wordCounter * sizeof(char*));
+    for(int i = 0; i < *wordCounter; ++i){
         words[i] = (char *)malloc(MAX_ARR * sizeof(char));
     }
 
@@ -65,8 +66,48 @@ char** SeparateByWords(char *textLine){
 }
 
 
-void FindPalindromes(void){
-    
+void FindPalindromes(char *input){
+    FILE *data = fopen(input, "r");
+    int wordCounter = 0;
+    int letterCounter = 0;
+    int simillarityInd, realSimillarity=0;
+    char line[MAX_ARR] = {0};
+    char **onlyWords = NULL;
+    if(data == NULL){
+        printf("%s", FileErrorMsg);
+    }
+    else{
+        printf("%s", FileOpenSuccess);
+        while(!(feof(data))){
+            fgets(line, MAX_ARR, data);
+            onlyWords = SeparateByWords(line, &wordCounter);
+            for(int i = 0; i < wordCounter; ++i){
+                //printf("%s - ", onlyWords[i]);
+                for(int j = 0; onlyWords[i][j] != NULL; ++j){
+                    letterCounter++;
+                }
+                simillarityInd = letterCounter/2;
+                //printf("%d - %d\n",letterCounter, simillarityInd);
+
+                for(int j = 0; j < simillarityInd; ++j){
+                        if(onlyWords[i][j] == onlyWords[i][letterCounter-j-1]){
+                            realSimillarity++;
+                            //printf("%d", realSimillarity);
+                        }
+                }
+
+                if(realSimillarity == simillarityInd){
+                    printf("%s ", onlyWords[i]);
+                }
+                realSimillarity = 0;
+                letterCounter = 0;
+            }
+
+        }
+
+        printf("\n%s", EndOfFile);
+    }
+
 }
 
 
@@ -78,10 +119,6 @@ int main(){
     printf("%s", AskForOutput);
     EnterFileName(output);
     */
-    FILE *data = fopen(input, "r");
-    char line[MAX_ARR] = {0};
-    fgets(line, MAX_ARR, data);
-    SeparateByWords(line);
-
+    FindPalindromes(input);
     return 0;
 }
