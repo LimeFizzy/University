@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_ARR 255
 #define WelcomeMsg "Sveiki, sita programa randa ir atspausina visus zodzius, kuries vienodai skaitosi is pradzios ir is galo.\n"
@@ -67,22 +68,37 @@ char** SeparateByWords(char *textLine, int *wordCounter){
     return words;
 }
 
+void freeMemory(char **words, int wordCount) {
+    for (int i = 0; i < wordCount; ++i) {
+        free(words[i]);
+    }
+    free(words);
+}
+
 void FindPalindromes(char *input, char *output){
-    FILE *data = fopen(input, "r");
     int wordCounter = 0;
     int letterCounter = 0;
     int simillarityInd, realSimillarity=0;
     char line[MAX_ARR] = {0};
     char **onlyWords = NULL;
-    FILE *result = fopen(output, "w");
+    
+    FILE *data = fopen(input, "r");
+    
     if(data == NULL){
         printf("%s", FileErrorMsg);
     }
     else{
+        FILE *result = fopen(output, "w");
         printf("%s", FileOpenSuccess);
-        while(!(feof(data))){
-            fgets(line, MAX_ARR, data);
+        
+        while(fgets(line, MAX_ARR, data) != NULL){
+            
+            if(line[0] == '\n'){
+                continue;
+            }
+
             onlyWords = SeparateByWords(line, &wordCounter);
+
             for(int i = 0; i < wordCounter; ++i){
                 for(int j = 0; onlyWords[i][j] != '\0'; ++j){
                     letterCounter++;
@@ -90,35 +106,37 @@ void FindPalindromes(char *input, char *output){
                 simillarityInd = letterCounter/2;
 
                 for(int j = 0; j < simillarityInd; ++j){
-                        if(onlyWords[i][j] == onlyWords[i][letterCounter-j-1]){
-                            realSimillarity++;
-                        }
+                    if(onlyWords[i][j] == onlyWords[i][letterCounter-j-1]){
+                        realSimillarity++;
+                    }
                 }
-                // Spausdinimas turi buti pakeistas, reikia pabandyti ikelt zodzius i nauja masyva ir 
-                // spausdinti su fputs arba fprintf
+                
                 if(realSimillarity == simillarityInd){
-                    //fprintf(result,"%s ", onlyWords[i]);
+                    fprintf(result, "%s ", onlyWords[i]);
                 }
+                
                 realSimillarity = 0;
                 letterCounter = 0;
+                memset(line, 0, MAX_ARR);
             }
-            
+            fprintf(result, "\n");
         }
-
-        printf("\n%s", EndOfFile);
+        fclose(data);
+        fclose(result);
+        freeMemory(onlyWords, wordCounter);
+        printf("%s", EndOfFile);
     }
-
 }
 
 
 int main(){
-    char input[100] = "data.txt", output[100] = "rez.txt";
-    /*printf("%s", WelcomeMsg);
+    char input[100] = {0}, output[100] = {0};
+    printf("%s", WelcomeMsg);
     printf("%s", AskForInput);
     EnterFileName(input);
     printf("%s", AskForOutput);
     EnterFileName(output);
-    */
+    
     FindPalindromes(input, output);
     return 0;
 }
