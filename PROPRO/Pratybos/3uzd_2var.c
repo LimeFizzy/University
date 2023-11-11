@@ -135,7 +135,6 @@ void FindPalindromes(char *input, char *output){
     }
 }
 
-
 int main(){
     char input[100] = {0}, output[100] = {0};
     printf("%s", WelcomeMsg);
