@@ -8,6 +8,8 @@
 #define FileErrorMsg "Nepavyko atidaryti/surasti norimo failo.\n"
 #define FileOpenSuccess "Failas sekmingai atidarytas!\n"
 #define EndOfFile "Buvo pasiekta failo pabaiga.\n"
+#define WrongFileInput "Neteisingas failo pavadinimas. Iveskite failo pavadinima formatu: \"filename.txt\".\n"
+#define FileReadSuccess "Failo pavadinimas sekmingai nuskaitytas.\n"
 
 void EnterFileName(char *fileName){
     int validInput = 0;
@@ -23,14 +25,14 @@ void EnterFileName(char *fileName){
         }
 
         if(pointLoc == -1 || pointLoc == 0){
-            printf("Neteisingas failo pavadinimas. Iveskite failo pavadinima formatu: \"filename.txt\".\n");
+            printf("%s", WrongFileInput);
         }
         else if((fileName[pointLoc+1]=='t') && (fileName[pointLoc+2]=='x') && (fileName[pointLoc+3]=='t')){
-            printf("Failo pavadinimas sekmingai nuskaitytas.\n");
+            printf("%s", FileReadSuccess);
             validInput = 1;
         }
         else{
-            printf("Neteisingas failo pavadinimas. Iveskite failo pavadinima formatu: \"filename.txt\".\n");
+            printf("%s", WrongFileInput);
         }
     }
     
@@ -65,14 +67,14 @@ char** SeparateByWords(char *textLine, int *wordCounter){
     return words;
 }
 
-
-void FindPalindromes(char *input){
+void FindPalindromes(char *input, char *output){
     FILE *data = fopen(input, "r");
     int wordCounter = 0;
     int letterCounter = 0;
     int simillarityInd, realSimillarity=0;
     char line[MAX_ARR] = {0};
     char **onlyWords = NULL;
+    FILE *result = fopen(output, "w");
     if(data == NULL){
         printf("%s", FileErrorMsg);
     }
@@ -82,27 +84,25 @@ void FindPalindromes(char *input){
             fgets(line, MAX_ARR, data);
             onlyWords = SeparateByWords(line, &wordCounter);
             for(int i = 0; i < wordCounter; ++i){
-                //printf("%s - ", onlyWords[i]);
-                for(int j = 0; onlyWords[i][j] != NULL; ++j){
+                for(int j = 0; onlyWords[i][j] != '\0'; ++j){
                     letterCounter++;
                 }
                 simillarityInd = letterCounter/2;
-                //printf("%d - %d\n",letterCounter, simillarityInd);
 
                 for(int j = 0; j < simillarityInd; ++j){
                         if(onlyWords[i][j] == onlyWords[i][letterCounter-j-1]){
                             realSimillarity++;
-                            //printf("%d", realSimillarity);
                         }
                 }
-
+                // Spausdinimas turi buti pakeistas, reikia pabandyti ikelt zodzius i nauja masyva ir 
+                // spausdinti su fputs arba fprintf
                 if(realSimillarity == simillarityInd){
-                    printf("%s ", onlyWords[i]);
+                    //fprintf(result,"%s ", onlyWords[i]);
                 }
                 realSimillarity = 0;
                 letterCounter = 0;
             }
-
+            
         }
 
         printf("\n%s", EndOfFile);
@@ -119,6 +119,6 @@ int main(){
     printf("%s", AskForOutput);
     EnterFileName(output);
     */
-    FindPalindromes(input);
+    FindPalindromes(input, output);
     return 0;
 }

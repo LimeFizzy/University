@@ -2,9 +2,9 @@
 triple:          'arm64-apple-darwin'
 binary-path:     '/Users/leonardassinkevicius/Documents/University/PROPRO/Pratybos/output/3uzd_2var'
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _EnterFileName, symObjAddr: 0x0, symBinAddr: 0x100003710, symSize: 0x180 }
-  - { offsetInCU: 0x4C, offset: 0x4C, size: 0x8, addend: 0x0, symName: _EnterFileName, symObjAddr: 0x0, symBinAddr: 0x100003710, symSize: 0x180 }
-  - { offsetInCU: 0xA8, offset: 0xA8, size: 0x8, addend: 0x0, symName: _SeparateByWords, symObjAddr: 0x180, symBinAddr: 0x100003890, symSize: 0x1BC }
-  - { offsetInCU: 0x15C, offset: 0x15C, size: 0x8, addend: 0x0, symName: _FindPalindromes, symObjAddr: 0x33C, symBinAddr: 0x100003A4C, symSize: 0x29C }
-  - { offsetInCU: 0x238, offset: 0x238, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x5D8, symBinAddr: 0x100003CE8, symSize: 0x94 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _EnterFileName, symObjAddr: 0x0, symBinAddr: 0x1000036AC, symSize: 0x1B0 }
+  - { offsetInCU: 0x4C, offset: 0x4C, size: 0x8, addend: 0x0, symName: _EnterFileName, symObjAddr: 0x0, symBinAddr: 0x1000036AC, symSize: 0x1B0 }
+  - { offsetInCU: 0xA8, offset: 0xA8, size: 0x8, addend: 0x0, symName: _SeparateByWords, symObjAddr: 0x1B0, symBinAddr: 0x10000385C, symSize: 0x1BC }
+  - { offsetInCU: 0x15C, offset: 0x15C, size: 0x8, addend: 0x0, symName: _FindPalindromes, symObjAddr: 0x36C, symBinAddr: 0x100003A18, symSize: 0x2B8 }
+  - { offsetInCU: 0x256, offset: 0x256, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x624, symBinAddr: 0x100003CD0, symSize: 0x9C }
 ...
