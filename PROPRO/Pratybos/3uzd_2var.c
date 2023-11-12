@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Aprasytos visi nauduojamieji pranesimai.
 #define MAX_ARR 255
 #define WelcomeMsg "Sveiki, sita programa randa ir atspausina visus zodzius, kuries vienodai skaitosi is pradzios ir is galo.\n"
 #define AskForInput "Iveskite duomenu failo pavadinima. (pvz. duom.txt)\n"
@@ -12,8 +13,9 @@
 #define WrongFileInput "Neteisingas failo pavadinimas. Iveskite failo pavadinima formatu: \"filename.txt\".\n"
 #define FileReadSuccess "Failo pavadinimas sekmingai nuskaitytas.\n"
 #define OutputError "Nepavyko sukurti/atidaryti rezultatu failo.\n"
-#define GoodByeMSG "Programa baige savo darba. Rezultato ieskokyte faile "
+#define GoodByeMSG "Programa baige savo darba.\n"
 
+// Procedura, kuri nustato ar vartotojo ivestis yra .txt failas ir issaugoja ji.
 void EnterFileName(char *fileName){
     int validInput = 0;
     int pointLoc = -1;
@@ -41,6 +43,8 @@ void EnterFileName(char *fileName){
     
 }
 
+// Funkcija, kuri padalina nuskaityta teksto eilute i atskirus zodzius ir grazina dvimacio masyvo
+// su tais zodziais adresa.
 char** SeparateByWords(char *textLine, int *wordCounter){
     *wordCounter = 0;
     for(int i = 0; i < MAX_ARR; ++i){
@@ -50,7 +54,6 @@ char** SeparateByWords(char *textLine, int *wordCounter){
     }
     (*wordCounter)++;
     
-    // Allocating 2D array for words in line
     char **words = (char **)malloc(*wordCounter * sizeof(char*));
     for(int i = 0; i < *wordCounter; ++i){
         words[i] = (char *)malloc(MAX_ARR * sizeof(char));
@@ -70,6 +73,7 @@ char** SeparateByWords(char *textLine, int *wordCounter){
     return words;
 }
 
+// Papildoma procedura atminties atlaisvinimui.
 void freeMemory(char **words, int wordCount) {
     for (int i = 0; i < wordCount; ++i) {
         free(words[i]);
@@ -77,6 +81,7 @@ void freeMemory(char **words, int wordCount) {
     free(words);
 }
 
+// Procedura ieskanti palindromus ir isspausdina juos i rezultatu faila.
 void FindPalindromes(char *input, char *output){
     int wordCounter = 0;
     int letterCounter = 0;
@@ -143,6 +148,6 @@ int main(){
     printf("%s", AskForOutput);
     EnterFileName(output);
     FindPalindromes(input, output);
-    printf("%s%s.\n", GoodByeMSG, output);
+    printf("%s", GoodByeMSG);
     return 0;
 }
