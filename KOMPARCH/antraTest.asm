@@ -141,13 +141,22 @@ Compare:
     jne Finish
 
 SameString:
-    mov bx, 1
+    mov ah, 40h
+    mov bx, outputFD
+    mov cx, letterCount
+    mov dx, offset string2
+    int 21h
     mov di, offset string1
     ret
 
 Finish:
-    mov bx, 0
     sub si, cx
+    mov ah, 40h
+    mov bx, outputFD
+    mov cx, 1
+    mov dx, si
+    int 21h
+    inc si
     mov di, offset string1
     ret
 
@@ -188,23 +197,6 @@ Read:
 
 StringComparison:
     call ComparingString
-    cmp bx, 1
-    je PrintString
-    mov ah, 40h
-    mov bx, outputFD
-    mov cx, 1
-    mov dx, si
-    int 21h
-    inc si
-    jmp Read
-
-PrintString:
-    mov ah, 40h
-    mov bx, outputFD
-    mov cx, letterCount                           ; Kiek simboliu reik spausdinti
-    mov dx, offset string2
-    int 21h
-	
     jmp Read
 
 Return:
