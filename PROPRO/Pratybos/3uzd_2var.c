@@ -1,3 +1,10 @@
+//LSP numeris - 2312091
+//el. pastas - leonardas.sinkevicius@mif.stud.vu.lt
+//Uzduoties numeris - 3
+//Uzduoties variantas - 2
+
+//Sukurti programa, kuri tekstiniame faile surastu palindromus ir atspausdintu juos kitame faile.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
