@@ -7,10 +7,10 @@
     inputFD dw, ?               ; Input Failo Deskriptorius
 	string1 db 255 dup(0)
 	string2 db 255 dup(0)
+    letterCount dw, ?
 	output db 255 dup(0)
     outputFD dw, ?              ; Output Failo Deskriptorius
     buffer db 50000 dup(?)
-    tempBuf db 255 dup(0)       ; Reikalingas kad issaugoti dalinai kartojamaji pradinio failo teksta
 .CODE
 Start:
 	mov ax, @data
@@ -33,6 +33,21 @@ SkipHelp:
 	call SaveArgument
 	mov si, offset string2
 	call SaveArgument
+    mov di, offset string2
+    push di
+    push cx
+    xor cx, cx
+GetLen:
+    cmp byte ptr [di], 0
+    je Stop
+    inc cx
+    inc di
+    jmp GetLen
+Stop:
+    mov letterCount, cx
+    pop cx
+    pop di
+
 	mov si, offset output
 	call SaveArgument
 
@@ -112,11 +127,41 @@ Helpme:
 SaveArgument ENDP
 
 
+ComparingString PROC
+inc cx
+Compare:
+    inc si
+    inc di
+    mov al, byte ptr [si]
+    mov ah, byte ptr [di]
+    cmp ah, 0
+    je SameString
+    cmp al, ah
+    je SameSymbol
+    jne Finish
+
+SameString:
+    mov bx, 1
+    mov di, offset string1
+    ret
+
+Finish:
+    mov bx, 0
+    sub si, cx
+    mov di, offset string1
+    ret
+
+SameSymbol:
+    inc cx
+    jmp Compare
+
+ComparingString ENDP
+
+
 TextManipulations PROC
     mov si, offset buffer
     mov di, offset string1
     xor cx, cx
-    push cx
 
 Read:
     mov ah, 3Fh
@@ -130,7 +175,8 @@ Read:
     mov al, byte ptr [si]
     mov ah, byte ptr [di]
     cmp al, ah
-    je CheckForString
+    mov cx, 0
+    je StringComparison
 
     mov ah, 40h
     mov bx, outputFD
@@ -138,31 +184,27 @@ Read:
     mov dx, si
     int 21h
     inc si
-    mov di, offset string1
-    pop cx
-    xor cx, cx
-    push cx
     jmp Read
 
-CheckForString:
-    pop cx
-    inc cx
-    inc di
-    cmp byte ptr [di], 0
+StringComparison:
+    call ComparingString
+    cmp bx, 1
     je PrintString
+    mov ah, 40h
+    mov bx, outputFD
+    mov cx, 1
+    mov dx, si
+    int 21h
     inc si
-    push cx
     jmp Read
 
 PrintString:
     mov ah, 40h
     mov bx, outputFD
-    mov cx, 3                           ; Kiek simboliu reik spausdinti
+    mov cx, letterCount                           ; Kiek simboliu reik spausdinti
     mov dx, offset string2
     int 21h
-    inc si
-    xor cx, cx
-    push cx
+	
     jmp Read
 
 Return:
