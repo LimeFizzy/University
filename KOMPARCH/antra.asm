@@ -33,8 +33,8 @@ SkipHelp:
 	call SaveArgument
 	mov si, offset string2
 	call SaveArgument
+	push di
     mov di, offset string2
-    push di
     push cx
     xor cx, cx
 GetLen:
