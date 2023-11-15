@@ -10,7 +10,7 @@
     letterCount dw, ?
 	output db 255 dup(0)
     outputFD dw, ?              ; Output Failo Deskriptorius
-    buffer db 50000 dup(?)
+    buffer db 50000 dup(0)
 .CODE
 Start:
 	mov ax, @data
