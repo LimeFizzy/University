@@ -99,7 +99,15 @@ MissingFile:
     jmp Final
 
 
+
 SaveArgument PROC
+SkipSpace:
+    mov dx, [es:bx]
+    cmp dl, 20h
+    jne Begin
+    inc bx
+    jmp SkipSpace
+
 Begin:
 	mov dx, [es:bx]
 	inc bx
@@ -172,12 +180,7 @@ TextManipulations PROC
     mov di, offset string1
     xor cx, cx
 
-Read:
-    mov ah, 3Fh
-    mov bx, inputFD
-    mov cx, 1
-    mov dx, si
-    int 21h    
+Read:   
 
     cmp byte ptr [si], 0
     je Return
