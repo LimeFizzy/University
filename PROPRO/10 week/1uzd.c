@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <limits.h>
-
-/* First edition
-int strlen(char *string){
-    return 0;
-}*/
+#include <string.h>
 
 int strlenght(char *string){
     char counter = 0;
@@ -24,10 +20,10 @@ int main(){
     for(int i = 0; i < CHAR_MAX; ++i){
         max[i] = 'a';
     }
-    assert(strlenght("Bye") == 3);
-    assert(strlenght("Hello") == 5);
-    assert(strlenght("4") == 1);
-    assert(strlenght("") == 0);
+    assert(strlenght("Bye") == strlen("Bye"));
+    assert(strlenght("Hello") == strlen("Hello"));
+    assert(strlenght("4") == strlen("4"));
+    assert(strlenght("") == strlen(""));
     assert(strlenght(max) == -1);
     return 0;
 }

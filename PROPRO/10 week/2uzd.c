@@ -2,37 +2,25 @@
 #include <assert.h>
 #include <string.h>
 
-int strcopy(char *source, char *destination){
-    printf("%d", sizeof(source));
-    
-    if(strlen(source) > strlen(destination)){
-        return -1;
-    }
-    else{
-        int symCount = 0;
-        for(; source[symCount] != '\0'; ++symCount){
-            destination[symCount] = source[symCount];
+int strcompare(char *string1, char *string2){
+    for(int i = 0; string1[i] != '\0' && string2[i] != '\0'; ++i){
+        if(string1[i] == string2[i]){
+            continue;
         }
-        destination[++symCount] = '\0';
+        else{
+            return string1[i] - string2[i];
+        }
     }
     return 0;
 }
 
 int main(){
-    char first[20] = "Hellodase";
-    char second[20];
-    char third[1];
-    strcopy(first, second);
-    //printf("%x", sizeof(char *));
-
-    //assert(strcopy(first, second) == 0);
-    //strcopy(first, third);
-    //printf("%d\n", sizeof(third));
-    /*for(int i = 0; i < strlen(third); ++i){
-        printf("%c", third[i]);
-    }*/
-    //printf("%s", third);
-    //assert(strcopy(first, third) == -1);
-    //printf("%d", strcopy(first, third));
+    char string1[] = "Hello";
+    char string2[] = "Hello";
+    char string3[] = "Bro";
+    char string4[] = "PROPRO";
+    assert(strcompare(string1, string2) == strcmp(string1, string2));
+    assert(strcompare(string1, string3) == strcmp(string1, string3));
+    assert(strcompare(string1, string4) == strcmp(string1, string4));
     return 0;
 }
