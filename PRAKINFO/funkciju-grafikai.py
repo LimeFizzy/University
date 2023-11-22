@@ -6,7 +6,7 @@ Y = np.sin(pow(X,2))
 y = (-1, 1, 0.5)
 
 plt.plot(X, Y, linestyle = "dotted")
-plt.title("f(x) = sin (x^2)")
+plt.title("$\t{f}(x) = \sin (x^2)$" )
 plt.ylabel("y")
 plt.xlabel("x")
 plt.xlim(-6, 6)
