@@ -171,24 +171,26 @@ Print PROC
 Begin:
     xor dx, dx        ; Clear dx before each division
     div bx            ; Divide AX by 10h, quotient in AX, remainder in DX
-
     ; Compare remainder with '9' to decide whether to print a number or a character
     cmp dx, 9
     jbe PrintNum      ; Jump if less than or equal to '9'
     add dl, 'A' - 10  ; Convert remainder to ASCII for letters
-    jmp PrintChar
+	jmp Continue
 
 PrintNum:
     add dl, '0'       ; Convert remainder to ASCII for numbers
+Continue:
+	push dx
+	loop Begin
 
+	mov cx, 4
 PrintChar:
     ; Print the current character
-    push ax
     mov ah, 2
+	pop dx
     int 21h
-    pop ax
 
-    loop Begin
+    loop PrintChar
 
 	pop bx
     ret
