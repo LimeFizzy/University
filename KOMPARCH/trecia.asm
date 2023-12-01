@@ -15,6 +15,7 @@
 ; Programa, perrašanti 1 pertraukimo apdorojimo procedūrą; procedūra atpažįsta komandą MOV ir išveda į ekraną jos bitą w
 ;***************************************************************
 
+; 1000 11d0 mod 0sr r/m [poslinkis]
 .model small
 
 .stack 100h
@@ -23,6 +24,11 @@
 	PranMOV	db "Zingsninio rezimo pertraukimas! $"
 	Enteris db 13, 10, "$"
 	PranNe	db "Komanda ne MOV r/m<=sreg.", 13, 10, "$"
+	KomMov db "MOV $"
+	SegmES db "ES $"
+	SegmCS db "CS $"
+	SegmSS db "SS $"
+	SegmDS db "DS $"
 
 .code
   Pradzia:
@@ -59,8 +65,14 @@
 	NOP				;Pirmas pertraukimas kyla ne prieš šią komandą, o po jos; todėl tiesiog vieną komandą nieko nedarome
 	
 	MOV	ax, bx		;Šitą komandą nagrinės pertraukimo apdorojimo procedūra
-	MOV	ax, cs		;Šitą komandą nagrinės pertraukimo apdorojimo procedūra
-	mov ds, ax
+	MOV	ax, cs		;Šitą komandą nagrinės pertraukimo apdorojimo procedūra d = 0
+	mov ds, ax      ;d = 1
+	mov ds, sp
+	mov ds, bp
+	mov ds, si
+	mov ds, di
+	mov ds, [BX+SI]
+	mov [bx+si], ds
 	MOV	al, 22h		;Šitą komandą nagrinės pertraukimo apdorojimo procedūra
 	INC ax			;Šitą komandą nagrinės pertraukimo apdorojimo procedūra
 	
@@ -118,7 +130,6 @@ ReikMov:
 
 	;Išvedame pranešimą ir bito w reikšmę
 Spausdink:
-	;PUSH dx			;Registre dl suformuota bito w reikšmė, todėl, kad jos nesugadintume, išsaugome į steką
 	MOV ah, 9
 	MOV dx, offset PranMOV
 	INT 21h
@@ -140,12 +151,19 @@ Spausdink:
 	MOV dh, [es:bx]
 	inc bx
 	mov dl, [es:bx]
+	call ChooseSegment
 	mov ax, dx
 	mov cx, 4
 	call Print
 
 	mov ah, 2
 	mov dx, ' '
+	int 21h
+
+	mov ah, 9
+	mov dx, offset KomMov
+	int 21h
+	mov dx, si
 	int 21h
 	
 	MOV ah, 9
@@ -173,27 +191,67 @@ Begin:
     div bx            ; Divide AX by 10h, quotient in AX, remainder in DX
     ; Compare remainder with '9' to decide whether to print a number or a character
     cmp dx, 9
-    jbe PrintNum      ; Jump if less than or equal to '9'
+    jbe Num      ; Jump if less than or equal to '9'
     add dl, 'A' - 10  ; Convert remainder to ASCII for letters
 	jmp Continue
 
-PrintNum:
+Num:
     add dl, '0'       ; Convert remainder to ASCII for numbers
 Continue:
 	push dx
 	loop Begin
 
 	mov cx, 4
-PrintChar:
+PrintReg:
     ; Print the current character
     mov ah, 2
 	pop dx
     int 21h
 
-    loop PrintChar
+    loop PrintReg
 
 	pop bx
     ret
+
 Print ENDP
+
+
+ChooseSegment PROC
+	push bx
+Prepare:
+	mov bx, dx
+	AND bx, 0018h
+
+SegmentSelection:
+	cmp bx, 0000h
+	je SaveES
+	cmp bx, 0008h
+	je SaveCS
+	cmp bx, 0010h
+	je SaveSS
+	cmp bx, 0018h
+	je SaveDS
+
+	jmp Exit
+SaveDS:
+	mov si, offset SegmDS
+	jmp Exit
+
+SaveES:
+	mov si, offset SegmES
+	jmp Exit
+
+SaveCS:
+	mov si, offset SegmCS
+	jmp Exit
+
+SaveSS:
+	mov si, offset SegmSS
+	jmp Exit
+
+Exit:
+	pop bx
+	ret
+ChooseSegment ENDP
 
 END Pradzia
