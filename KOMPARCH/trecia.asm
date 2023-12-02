@@ -16,6 +16,7 @@
 ;***************************************************************
 
 ; 1000 11d0 mod 0sr r/m [poslinkis]
+; 0000 0000 1100 0111  - 00C8h
 .model small
 
 .stack 100h
@@ -73,6 +74,7 @@
 	mov ds, di
 	mov ds, [BX+SI]
 	mov [bx+si], ds
+	mov ds, [bx+3]
 	MOV	al, 22h		;Šitą komandą nagrinės pertraukimo apdorojimo procedūra
 	INC ax			;Šitą komandą nagrinės pertraukimo apdorojimo procedūra
 	
@@ -151,6 +153,21 @@ Spausdink:
 	MOV dh, [es:bx]
 	inc bx
 	mov dl, [es:bx]
+
+; 	push dx
+; 	and dx, 0200h
+; 	cmp dx, 0h
+; 	je Dis0
+; 	pop dx
+; 	jmp Dis1
+; Dis0: ; Ispradziu registras, po to segmentas
+; 	pop dx
+
+; 	jmp Pabaiga
+
+
+; Dis1: ; Ispradziu segmentas, po to registras
+; 	pop dx
 	call ChooseSegment
 	mov ax, dx
 	mov cx, 4
@@ -218,11 +235,9 @@ Print ENDP
 
 ChooseSegment PROC
 	push bx
-Prepare:
 	mov bx, dx
 	AND bx, 0018h
 
-SegmentSelection:
 	cmp bx, 0000h
 	je SaveES
 	cmp bx, 0008h
@@ -253,5 +268,18 @@ Exit:
 	pop bx
 	ret
 ChooseSegment ENDP
+
+
+ChooseRegister PROC
+	push bx
+	mov bx, dx
+	AND bx, 00C8h
+
+
+
+
+
+	ret
+ChooseRegister ENDP
 
 END Pradzia
