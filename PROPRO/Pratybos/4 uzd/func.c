@@ -7,14 +7,15 @@ typedef struct Node {
     struct Node *next;
 } Node;
 
+// Funkcija spausdinanti sarasa
 void PrintList(Node *head){
     if(head != NULL){
         PrintList(head->next);
         printf("%d ", head->value);
     }
-    printf("\n");
 }
 
+// Funkcija kuri randa maksimalia saraso reiksme
 int FindMaxValue(Node *head){
     int max = INT_MIN;
     while(head != NULL){
@@ -26,6 +27,7 @@ int FindMaxValue(Node *head){
     return max;
 }   
 
+// Funkcija istrinanti maksimalia reiksme
 void DeleteMaxValue(Node **head, int num){
     Node *current = *head;
     Node *prev = NULL;
@@ -47,6 +49,7 @@ void DeleteMaxValue(Node **head, int num){
     }
 }
 
+// Funkcija uzpildanti sarasa atsitiktinomis reiksmemis
 void CreateList(Node **start, Node **end){
     Node *tempNode;
     int value;
@@ -73,6 +76,7 @@ void CreateList(Node **start, Node **end){
     }
 }
 
+// Funkcija validuojanti pasirinkima (y/n)
 int Validation(char x){
     if(x == 'n' || x == 'y'){
         if(x == 'y')

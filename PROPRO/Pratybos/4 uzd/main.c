@@ -26,6 +26,7 @@
 #define ONE_MORE_TRY "Neteisinga ivestis, iseckite y - taip, arba n - ne.\n"
 #define CONTINUE "Paspauskite ENTER, kad testi.\n"
 
+// Funkcija atspausdinanti meniu pasirinkimus 
 int menu(){
     int choice, validInput = 0;
     while(!validInput){
@@ -112,6 +113,7 @@ int main(){
             }
             else{
                 PrintList(start);
+                printf("\n");
             }
             break;
 
@@ -137,7 +139,7 @@ int main(){
             break;
         }
         printf("%s", CONTINUE);
-        while( getchar() != '\n');
+        while(getchar() != '\n');
     }
     return 0;
 }

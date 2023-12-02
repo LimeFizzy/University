@@ -1,0 +1,24 @@
+1. Kintamųjų inicializavimas ir reikšmių priskirimas
+    1.1 Visi paprasti kintamieji privalo būti parašyti mažosiomis raidėmis. Jeigu pavadinimas sudarytas iš 
+    kelių žodžių kiekvieno išskirus pirmojo žodžio pirmoji raidė privalo būti dižioji.
+    1.2 Jeigu kažkokiam kintamajam priduodama reikšmė, turi būti tarpas prieš ir po lygybės ženklo.
+
+2. Operandai, ju rašymas
+    2.1 Prieš ir po kiekvieną operandą (išskirus vienviečius ir ;) privalo būti tarpai.
+
+3. Funkcijos ir jų apibrėžimai
+    3.1 Funkcijos pavadinimas privalo būti parašytas iš didžiosios raidės.
+    3.2 Kintamieji turi būti perduodami laikydamasis 1 ir 2 skyrio taisyklėmis.
+    3.3 Prieš skliaustus neturi būti tarpo.
+
+4. #define naudojimas
+    4.1 Sukuriant kintamajį naudojant define, jo pavadinimas privalo būti parašytas didžiosiomis raidėmis,
+        o žodžiai atskirti tokiu ženklu: _
+
+5. Kodo lygiai
+    5.1 Kiekvienas naujas kodo lygys privalo būti parašytas su 4 tarpu arba 1 tab paspaudimo poslinkiu
+        praeito lygio atžvilgiu.
+
+6. Komentarai
+    6.1 Turi būti po vieną trumpą komentarą prieš funkciją, kuris pasako kokį veiksmą atlieka funkcija.
+    6.2 Leidžiami trumpi paaiškinimai funkcijų vidury.
