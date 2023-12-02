@@ -13,6 +13,7 @@
 // galbūt įspėti prieš kritinus veiksmus. Pvz. jei jau turime sąrašą atmintyje ir norime sukurti tuščią sąrašą (šiuo atveju spaudžiame 0). Vartotojas turi būti įspėtas, kad dabar esančio sąrašo duomenys dings ir patvirtinti arba atšaukti pasirinkimą  
 // ir panašūs atvejai
 #include <stdio.h>
+#include "func.h"
 
 #define WLC_MSG "Sveiki! Pasirinkite koki veiksma norite atlikti.\n"
 #define MENU_1 "1 - Sukurti tuscia sarasa.\n"
@@ -55,5 +56,15 @@ int main(){
     while(choice != 6){
         choice = menu();
     }
+
+    Node *start, *end;
+    int maxValue = 0;
+    CreateList(&start, &end);
+    printf("Generated list out of 10 elements:\n");
+    PrintList(start);
+    maxValue = FindMaxValue(start);
+    printf("\nMax value is: %d\n", maxValue);
+    DeleteMaxValue(&start, maxValue);
+    PrintList(start);
     return 0;
 }
