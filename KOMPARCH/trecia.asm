@@ -30,6 +30,18 @@
 	SegmCS db "CS $"
 	SegmSS db "SS $"
 	SegmDS db "DS $"
+	RegistAX db "AX $"
+	RegistBX db "BX $"
+	RegistCX db "CX $"
+	RegistDX db "DX $"
+	RegistSP db "SP $"
+	RegistBP db "BP $"
+	RegistSI db "SI $"
+	RegistDI db "Di $"
+	RegistBXirSI db "[BX+SI] $"
+	RegistBXirDI db "[BX+DI] $"
+	RegistBPirSI db "[BP+SI] $"
+	RegistBPirDI db "[BP+DI] $"
 
 .code
   Pradzia:
@@ -74,7 +86,6 @@
 	mov ds, di
 	mov ds, [BX+SI]
 	mov [bx+si], ds
-	mov ds, [bx+3]
 	MOV	al, 22h		;Šitą komandą nagrinės pertraukimo apdorojimo procedūra
 	INC ax			;Šitą komandą nagrinės pertraukimo apdorojimo procedūra
 	
@@ -169,6 +180,7 @@ Spausdink:
 ; Dis1: ; Ispradziu segmentas, po to registras
 ; 	pop dx
 	call ChooseSegment
+	push dx
 	mov ax, dx
 	mov cx, 4
 	call Print
@@ -180,6 +192,11 @@ Spausdink:
 	mov ah, 9
 	mov dx, offset KomMov
 	int 21h
+	mov dx, si
+	int 21h
+	pop dx
+	call ChooseRegister
+	mov ah, 9
 	mov dx, si
 	int 21h
 	
@@ -273,12 +290,91 @@ ChooseSegment ENDP
 ChooseRegister PROC
 	push bx
 	mov bx, dx
-	AND bx, 00C8h
+	AND bx, 00C7h
+; jeigu mod = 11
+	cmp bx, 00C0h
+	je RegAX
+	cmp bx, 00C1h
+	je RegCX
+	cmp bx, 00C2h
+	je RegDX
+	cmp bx, 00C3h
+	je RegBX
+	cmp bx, 00C4h
+	je RegSP
+	cmp bx, 00C5h
+	je RegBP
+	cmp bx, 00C6h
+	je RegSI
+	cmp bx, 00C7h
+	je RegDI
 
+; jeigu mod = 00
+	cmp bx, 0000h
+	je RegBXirSI
+	cmp bx, 0001h
+	je RegBXirDI
+	cmp bx, 0002h
+	je RegBPirSI
+	cmp bx, 0003h
+	je RegBPirDI
+	cmp bx, 0004h
+	je RegSI
+	cmp bx, 0005h
+	je RegDI
+	cmp bx, 0007h
+	je RegBX
 
+RegAX:
+	mov si, offset RegistAX
+	jmp Exit1
 
+RegBX:
+	mov si, offset RegistBX
+	jmp Exit1
 
+RegCX:
+	mov si, offset RegistCX
+	jmp Exit1
 
+RegDX:
+	mov si, offset RegistDX
+	jmp Exit1
+
+RegBP:
+	mov si, offset RegistBP
+	jmp Exit1
+
+RegSI:
+	mov si, offset RegistSI
+	jmp Exit1
+
+RegDI:
+	mov si, offset RegistDI
+	jmp Exit1
+
+RegSP:
+	mov si, offset RegistSP
+	jmp Exit1
+;;;;;;;;;
+RegBXirSI:
+	mov si, offset RegistBXirSI
+	jmp Exit1
+
+RegBXirDI:
+	mov si, offset RegistBXirDI
+	jmp Exit1
+
+RegBPirSI:
+	mov si, offset RegistBPirSI
+	jmp Exit1
+
+RegBPirDI:
+	mov si, offset RegistBPirDI
+	jmp Exit1
+
+Exit1:
+	pop bx
 	ret
 ChooseRegister ENDP
 
