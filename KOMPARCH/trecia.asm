@@ -26,22 +26,23 @@
 	Enteris db 13, 10, "$"
 	PranNe	db "Komanda ne MOV r/m<=sreg.", 13, 10, "$"
 	KomMov db "MOV $"
-	SegmES db "ES $"
-	SegmCS db "CS $"
-	SegmSS db "SS $"
-	SegmDS db "DS $"
-	RegistAX db "AX $"
-	RegistBX db "BX $"
-	RegistCX db "CX $"
-	RegistDX db "DX $"
-	RegistSP db "SP $"
-	RegistBP db "BP $"
-	RegistSI db "SI $"
-	RegistDI db "Di $"
-	RegistBXirSI db "[BX+SI] $"
-	RegistBXirDI db "[BX+DI] $"
-	RegistBPirSI db "[BP+SI] $"
-	RegistBPirDI db "[BP+DI] $"
+	SegmES db "ES$"
+	SegmCS db "CS$"
+	SegmSS db "SS$"
+	SegmDS db "DS$"
+	RegistAX db "AX$"
+	RegistBX db "BX$"
+	RegistCX db "CX$"
+	RegistDX db "DX$"
+	RegistSP db "SP$"
+	RegistBP db "BP$"
+	RegistSI db "SI$"
+	RegistDI db "Di$"
+	RegistBXirSI db "[BX+SI]$"
+	RegistBXirDI db "[BX+DI]$"
+	RegistBPirSI db "[BP+SI]$"
+	RegistBPirDI db "[BP+DI]$"
+	Next db ", $"
 
 .code
   Pradzia:
@@ -164,26 +165,23 @@ Spausdink:
 	MOV dh, [es:bx]
 	inc bx
 	mov dl, [es:bx]
-
-; 	push dx
-; 	and dx, 0200h
-; 	cmp dx, 0h
-; 	je Dis0
-; 	pop dx
-; 	jmp Dis1
-; Dis0: ; Ispradziu registras, po to segmentas
-; 	pop dx
-
-; 	jmp Pabaiga
-
-
-; Dis1: ; Ispradziu segmentas, po to registras
-; 	pop dx
-	call ChooseSegment
+	
 	push dx
 	mov ax, dx
 	mov cx, 4
 	call Print
+	pop dx
+
+	push dx
+	and dx, 0200h
+	cmp dx, 0h
+	je Dis0
+	pop dx
+	jmp Dis1
+Dis0: ; Ispradziu registras, po to segmentas
+	pop dx
+	call ChooseRegister
+	push dx
 
 	mov ah, 2
 	mov dx, ' '
@@ -193,6 +191,35 @@ Spausdink:
 	mov dx, offset KomMov
 	int 21h
 	mov dx, si
+	int 21h
+	mov dx, offset Next
+	int 21h
+	pop dx
+	call ChooseSegment
+	mov ah, 9
+	mov dx, si
+	int 21h
+	
+	MOV ah, 9
+	MOV dx, offset enteris
+	INT 21h
+	jmp Pabaiga
+
+
+Dis1: ; Ispradziu segmentas, po to registras
+	call ChooseSegment
+	push dx
+
+	mov ah, 2
+	mov dx, ' '
+	int 21h
+
+	mov ah, 9
+	mov dx, offset KomMov
+	int 21h
+	mov dx, si
+	int 21h
+	mov dx, offset Next
 	int 21h
 	pop dx
 	call ChooseRegister
