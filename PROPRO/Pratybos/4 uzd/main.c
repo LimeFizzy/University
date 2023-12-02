@@ -6,12 +6,6 @@
 // Sudaryti vienpusį sąrašą. Parašyti procedūrą, kuri išmeta iš sąrašo didžiausią elementą.
 
 // TO-DO-HERE: pagrindinis failas (meniu, programos paleidimas, procedūrų iškvietimas)
-
-// Turi būti sukurtas paprastas vartotojo meniu. Čia tik pavyzdys ir jį galima laisvai keisti pagal savo poreikius.:
-// Pastaba: apgalvoti įvairius atvejus
-// jei kelis kartus spaudžiama tas pats mygtukas (pvz. 2 kartus nuskaito iš duomenų failo). 
-// galbūt įspėti prieš kritinus veiksmus. Pvz. jei jau turime sąrašą atmintyje ir norime sukurti tuščią sąrašą (šiuo atveju spaudžiame 0). Vartotojas turi būti įspėtas, kad dabar esančio sąrašo duomenys dings ir patvirtinti arba atšaukti pasirinkimą  
-// ir panašūs atvejai
 #include <stdio.h>
 #include "func.h"
 
@@ -25,6 +19,12 @@
 #define CHOICE "Pasirinktas veiksmas: "
 #define SUC_CH "Pasirinkimas sekmingai nuskaitytas.\n"
 #define ERR_CH "Netinkama ivestis. Iveskite skaiciu 1-6 atitinkanti jusu norima veiksma.\n"
+#define EMP_LIST "Tuscias sarasas sekmingai sukurtas.\n"
+#define NO_FULL_LIST "Nera sukurta saraso. Sukurkite sarasa ir tik tada naudokite sia funkcija.\n"
+#define LIST_QUESTION "Programoje jau yra sukurtas sarasas. Ar tikrai norite istustinti ji? [y/n]\n"
+#define FULL_LIST_QUESTION "Programoje jau yra sukurtas sarasas. Ar tikrai norite pakeisti jo reiksmes? [y/n]\n"
+#define ONE_MORE_TRY "Neteisinga ivestis, iseckite y - taip, arba n - ne.\n"
+#define CONTINUE "Paspauskite ENTER, kad testi.\n"
 
 int menu(){
     int choice, validInput = 0;
@@ -44,27 +44,100 @@ int menu(){
             while(getchar() != '\n');
         }
     }
-    printf("%d", choice);
-    
+    printf("\n");
     return choice;
 }
 
 
 int main(){
-    int choice = 0;
-    printf("%s", WLC_MSG);
-    while(choice != 6){
-        choice = menu();
-    }
-
-    Node *start, *end;
+    Node *start = NULL, *end = NULL;
     int maxValue = 0;
-    CreateList(&start, &end);
-    printf("Generated list out of 10 elements:\n");
-    PrintList(start);
-    maxValue = FindMaxValue(start);
-    printf("\nMax value is: %d\n", maxValue);
-    DeleteMaxValue(&start, maxValue);
-    PrintList(start);
+    int choice = 0;
+    char option;
+    printf("%s", WLC_MSG);
+    while(1){
+        choice = menu();
+        switch (choice)
+        {
+        case 1:
+            if(start == NULL){
+                printf("%s", EMP_LIST);
+            }
+            else{
+                printf("%s", LIST_QUESTION);
+                while(1){
+                    scanf("%c", &option);
+                    if(Validation(option)){
+                        start = NULL;
+                        end = NULL;
+                        break;
+                    }
+                    else if(Validation(option) == -1){
+                        // Nieko nedarome
+                        break;
+                    }
+                    else{
+                        printf("%s", ONE_MORE_TRY);
+                    }
+                }
+            }
+            break;
+        
+        case 2:
+            if(start == NULL){
+                CreateList(&start, &end);
+            }
+            else{
+                printf("%s", FULL_LIST_QUESTION);
+                while(1){
+                    scanf("%c", &option);
+                    if(Validation(option)){
+                        CreateList(&start, &end);
+                        break;
+                    }
+                    else if(Validation(option) == -1){
+                        // Nieko nedarome
+                        break;
+                    }
+                    else{
+                        printf("%s", ONE_MORE_TRY);
+                    }
+                }
+            }
+            break;
+        
+        case 3:
+            if(start == NULL){
+                printf("%s", NO_FULL_LIST);
+            }
+            else{
+                PrintList(start);
+            }
+            break;
+
+        case 4:
+            if(start == NULL){
+                printf("%s", NO_FULL_LIST);
+            }
+            else{
+                maxValue = FindMaxValue(start);
+                DeleteMaxValue(&start, maxValue);
+            }
+            break;
+
+        case 5:
+            start = NULL;
+            end = NULL;
+            break;
+
+        case 6:
+            return 0;
+        
+        default:
+            break;
+        }
+        printf("%s", CONTINUE);
+        while( getchar() != '\n');
+    }
     return 0;
 }

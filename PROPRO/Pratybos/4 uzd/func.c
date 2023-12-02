@@ -12,6 +12,7 @@ void PrintList(Node *head){
         PrintList(head->next);
         printf("%d ", head->value);
     }
+    printf("\n");
 }
 
 int FindMaxValue(Node *head){
@@ -70,4 +71,14 @@ void CreateList(Node **start, Node **end){
         }
         counter++;
     }
+}
+
+int Validation(char x){
+    if(x == 'n' || x == 'y'){
+        if(x == 'y')
+            return 1;
+        else
+            return -1;
+    }
+    return 0;
 }
