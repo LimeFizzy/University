@@ -5,7 +5,6 @@
 
 // Sudaryti vienpusį sąrašą. Parašyti procedūrą, kuri išmeta iš sąrašo didžiausią elementą.
 
-// TO-DO-HERE: pagrindinis failas (meniu, programos paleidimas, procedūrų iškvietimas)
 #include <stdio.h>
 #include "func.h"
 
