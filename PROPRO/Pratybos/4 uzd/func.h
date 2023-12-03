@@ -1,10 +1,7 @@
-#ifndef FILE_H
-#define FILE_H
+#ifndef FUNC_H
+#define FUNC_H
 
-typedef struct Node {
-    int value;
-    struct Node *next;
-} Node;
+typedef struct Node Node;
 
 void PrintList(Node *head);
 int FindMaxValue(Node *head);

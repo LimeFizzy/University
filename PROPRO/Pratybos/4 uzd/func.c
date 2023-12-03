@@ -6,6 +6,11 @@
 
 #define ARR_MAX 100
 
+typedef struct Node {
+    int value;
+    struct Node *next;
+} Node;
+
 // Funkcija spausdinanti sarasa
 void PrintList(Node *head){
     if(head != NULL){
@@ -80,25 +85,25 @@ void ReadList(Node **start, Node **end){
     FILE* data = fopen("data.txt", "r");
     Node *tempNode;
     int counter = 0;
-    int number, values[ARR_MAX];
+    int number, numArray[ARR_MAX];
     fscanf(data, "%d", &number);
     *start = NULL;
     *end = NULL;
 
     for(int i = 0; i < number; ++i){
-        fscanf(data, "%d", &values[number - i - 1]);
+        fscanf(data, "%d", &numArray[number - i - 1]);
     }
 
     while(counter < number){
         if(*start == NULL){
             tempNode = (Node *)malloc(sizeof(Node));
-            tempNode->value = values[counter];
+            tempNode->value = numArray[counter];
             tempNode->next = NULL;
             *end = tempNode;
             *start = tempNode;
         } else {
             tempNode = (Node *)malloc(sizeof(Node));
-            tempNode->value = values[counter];
+            tempNode->value = numArray[counter];
             tempNode->next = NULL;
             (*end)->next = tempNode;
             *end = tempNode;
