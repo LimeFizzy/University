@@ -2,18 +2,16 @@
 triple:          'arm64-apple-darwin'
 binary-path:     '/Users/leonardassinkevicius/Documents/University/PROPRO/Pratybos/4 uzd/output/unit'
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _PrintList, symObjAddr: 0x0, symBinAddr: 0x100003A0C, symSize: 0x60 }
-  - { offsetInCU: 0x7F, offset: 0x7F, size: 0x8, addend: 0x0, symName: _PrintList, symObjAddr: 0x0, symBinAddr: 0x100003A0C, symSize: 0x60 }
-  - { offsetInCU: 0xA3, offset: 0xA3, size: 0x8, addend: 0x0, symName: _FindMaxValue, symObjAddr: 0x60, symBinAddr: 0x100003A6C, symSize: 0x70 }
-  - { offsetInCU: 0xD9, offset: 0xD9, size: 0x8, addend: 0x0, symName: _DeleteMaxValue, symObjAddr: 0xD0, symBinAddr: 0x100003ADC, symSize: 0xE8 }
-  - { offsetInCU: 0x127, offset: 0x127, size: 0x8, addend: 0x0, symName: _CreateList, symObjAddr: 0x1B8, symBinAddr: 0x100003BC4, symSize: 0x118 }
-  - { offsetInCU: 0x183, offset: 0x183, size: 0x8, addend: 0x0, symName: _ReadList, symObjAddr: 0x2D0, symBinAddr: 0x100003CDC, symSize: 0x14C }
-  - { offsetInCU: 0x1FB, offset: 0x1FB, size: 0x8, addend: 0x0, symName: _Validation, symObjAddr: 0x41C, symBinAddr: 0x100003E28, symSize: 0x70 }
-  - { offsetInCU: 0x223, offset: 0x223, size: 0x8, addend: 0x0, symName: _test_PrintList, symObjAddr: 0x48C, symBinAddr: 0x100003E98, symSize: 0x4 }
-  - { offsetInCU: 0x238, offset: 0x238, size: 0x8, addend: 0x0, symName: _test_FindMaxValue, symObjAddr: 0x490, symBinAddr: 0x100003E9C, symSize: 0x4 }
-  - { offsetInCU: 0x24D, offset: 0x24D, size: 0x8, addend: 0x0, symName: _test_DeleteMaxValue, symObjAddr: 0x494, symBinAddr: 0x100003EA0, symSize: 0x4 }
-  - { offsetInCU: 0x262, offset: 0x262, size: 0x8, addend: 0x0, symName: _test_CreateList, symObjAddr: 0x498, symBinAddr: 0x100003EA4, symSize: 0x4 }
-  - { offsetInCU: 0x277, offset: 0x277, size: 0x8, addend: 0x0, symName: _test_ReadList, symObjAddr: 0x49C, symBinAddr: 0x100003EA8, symSize: 0x4 }
-  - { offsetInCU: 0x28C, offset: 0x28C, size: 0x8, addend: 0x0, symName: _test_Validation, symObjAddr: 0x4A0, symBinAddr: 0x100003EAC, symSize: 0x4 }
-  - { offsetInCU: 0x2A1, offset: 0x2A1, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x4A4, symBinAddr: 0x100003EB0, symSize: 0x4C }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _PrintList, symObjAddr: 0x0, symBinAddr: 0x10000361C, symSize: 0x60 }
+  - { offsetInCU: 0x84, offset: 0x84, size: 0x8, addend: 0x0, symName: _PrintList, symObjAddr: 0x0, symBinAddr: 0x10000361C, symSize: 0x60 }
+  - { offsetInCU: 0xA8, offset: 0xA8, size: 0x8, addend: 0x0, symName: _FindMaxValue, symObjAddr: 0x60, symBinAddr: 0x10000367C, symSize: 0x70 }
+  - { offsetInCU: 0xDE, offset: 0xDE, size: 0x8, addend: 0x0, symName: _DeleteMaxValue, symObjAddr: 0xD0, symBinAddr: 0x1000036EC, symSize: 0xE8 }
+  - { offsetInCU: 0x12C, offset: 0x12C, size: 0x8, addend: 0x0, symName: _CreateList, symObjAddr: 0x1B8, symBinAddr: 0x1000037D4, symSize: 0x118 }
+  - { offsetInCU: 0x188, offset: 0x188, size: 0x8, addend: 0x0, symName: _ReadList, symObjAddr: 0x2D0, symBinAddr: 0x1000038EC, symSize: 0x1E0 }
+  - { offsetInCU: 0x21C, offset: 0x21C, size: 0x8, addend: 0x0, symName: _Validation, symObjAddr: 0x4B0, symBinAddr: 0x100003ACC, symSize: 0x70 }
+  - { offsetInCU: 0x244, offset: 0x244, size: 0x8, addend: 0x0, symName: _test_FindMaxValue, symObjAddr: 0x520, symBinAddr: 0x100003B3C, symSize: 0x74 }
+  - { offsetInCU: 0x276, offset: 0x276, size: 0x8, addend: 0x0, symName: _test_DeleteMaxValue, symObjAddr: 0x594, symBinAddr: 0x100003BB0, symSize: 0x68 }
+  - { offsetInCU: 0x2A8, offset: 0x2A8, size: 0x8, addend: 0x0, symName: _test_ReadList, symObjAddr: 0x5FC, symBinAddr: 0x100003C18, symSize: 0x58 }
+  - { offsetInCU: 0x2DA, offset: 0x2DA, size: 0x8, addend: 0x0, symName: _test_Validation, symObjAddr: 0x654, symBinAddr: 0x100003C70, symSize: 0xE8 }
+  - { offsetInCU: 0x2EF, offset: 0x2EF, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x73C, symBinAddr: 0x100003D58, symSize: 0x44 }
 ...
