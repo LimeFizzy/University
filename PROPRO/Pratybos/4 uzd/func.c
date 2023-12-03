@@ -2,12 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <limits.h>
+#include "func.h"
 
 #define ARR_MAX 100
-typedef struct Node {
-    int value;
-    struct Node *next;
-} Node;
 
 // Funkcija spausdinanti sarasa
 void PrintList(Node *head){
