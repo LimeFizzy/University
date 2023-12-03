@@ -2,12 +2,13 @@
 triple:          'arm64-apple-darwin'
 binary-path:     '/Users/leonardassinkevicius/Documents/University/PROPRO/Pratybos/4 uzd/output/main'
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _PrintList, symObjAddr: 0x0, symBinAddr: 0x1000033FC, symSize: 0x60 }
-  - { offsetInCU: 0x7E, offset: 0x7E, size: 0x8, addend: 0x0, symName: _PrintList, symObjAddr: 0x0, symBinAddr: 0x1000033FC, symSize: 0x60 }
-  - { offsetInCU: 0xA2, offset: 0xA2, size: 0x8, addend: 0x0, symName: _FindMaxValue, symObjAddr: 0x60, symBinAddr: 0x10000345C, symSize: 0x70 }
-  - { offsetInCU: 0xD8, offset: 0xD8, size: 0x8, addend: 0x0, symName: _DeleteMaxValue, symObjAddr: 0xD0, symBinAddr: 0x1000034CC, symSize: 0xE8 }
-  - { offsetInCU: 0x126, offset: 0x126, size: 0x8, addend: 0x0, symName: _CreateList, symObjAddr: 0x1B8, symBinAddr: 0x1000035B4, symSize: 0x118 }
-  - { offsetInCU: 0x182, offset: 0x182, size: 0x8, addend: 0x0, symName: _Validation, symObjAddr: 0x2D0, symBinAddr: 0x1000036CC, symSize: 0x70 }
-  - { offsetInCU: 0x1AA, offset: 0x1AA, size: 0x8, addend: 0x0, symName: _menu, symObjAddr: 0x340, symBinAddr: 0x10000373C, symSize: 0x198 }
-  - { offsetInCU: 0x1E0, offset: 0x1E0, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x4D8, symBinAddr: 0x1000038D4, symSize: 0x334 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _PrintList, symObjAddr: 0x0, symBinAddr: 0x1000030B4, symSize: 0x60 }
+  - { offsetInCU: 0x7F, offset: 0x7F, size: 0x8, addend: 0x0, symName: _PrintList, symObjAddr: 0x0, symBinAddr: 0x1000030B4, symSize: 0x60 }
+  - { offsetInCU: 0xA3, offset: 0xA3, size: 0x8, addend: 0x0, symName: _FindMaxValue, symObjAddr: 0x60, symBinAddr: 0x100003114, symSize: 0x70 }
+  - { offsetInCU: 0xD9, offset: 0xD9, size: 0x8, addend: 0x0, symName: _DeleteMaxValue, symObjAddr: 0xD0, symBinAddr: 0x100003184, symSize: 0xE8 }
+  - { offsetInCU: 0x127, offset: 0x127, size: 0x8, addend: 0x0, symName: _CreateList, symObjAddr: 0x1B8, symBinAddr: 0x10000326C, symSize: 0x118 }
+  - { offsetInCU: 0x183, offset: 0x183, size: 0x8, addend: 0x0, symName: _ReadList, symObjAddr: 0x2D0, symBinAddr: 0x100003384, symSize: 0x1E0 }
+  - { offsetInCU: 0x217, offset: 0x217, size: 0x8, addend: 0x0, symName: _Validation, symObjAddr: 0x4B0, symBinAddr: 0x100003564, symSize: 0x70 }
+  - { offsetInCU: 0x23F, offset: 0x23F, size: 0x8, addend: 0x0, symName: _menu, symObjAddr: 0x520, symBinAddr: 0x1000035D4, symSize: 0x1A8 }
+  - { offsetInCU: 0x275, offset: 0x275, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x6C8, symBinAddr: 0x10000377C, symSize: 0x404 }
 ...

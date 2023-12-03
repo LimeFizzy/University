@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <limits.h>
+
+#define ARR_MAX 100
 typedef struct Node {
     int value;
     struct Node *next;
@@ -25,7 +27,7 @@ int FindMaxValue(Node *head){
         head = head->next;
     }
     return max;
-}   
+}
 
 // Funkcija istrinanti maksimalia reiksme
 void DeleteMaxValue(Node **head, int num){
@@ -74,6 +76,39 @@ void CreateList(Node **start, Node **end){
         }
         counter++;
     }
+}
+
+// Funkcija uzpildanti sarasa reiksmemis is failo
+void ReadList(Node **start, Node **end){
+    FILE* data = fopen("data.txt", "r");
+    Node *tempNode;
+    int counter = 0;
+    int number, values[ARR_MAX];
+    fscanf(data, "%d", &number);
+    *start = NULL;
+    *end = NULL;
+
+    for(int i = 0; i < number; ++i){
+        fscanf(data, "%d", &values[number - i - 1]);
+    }
+
+    while(counter < number){
+        if(*start == NULL){
+            tempNode = (Node *)malloc(sizeof(Node));
+            tempNode->value = values[counter];
+            tempNode->next = NULL;
+            *end = tempNode;
+            *start = tempNode;
+        } else {
+            tempNode = (Node *)malloc(sizeof(Node));
+            tempNode->value = values[counter];
+            tempNode->next = NULL;
+            (*end)->next = tempNode;
+            *end = tempNode;
+        }
+        counter++;
+    }
+    fclose(data);
 }
 
 // Funkcija validuojanti pasirinkima (y/n)

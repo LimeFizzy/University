@@ -11,10 +11,11 @@
 #define WLC_MSG "Sveiki! Pasirinkite koki veiksma norite atlikti.\n"
 #define MENU_1 "1 - Sukurti tuscia sarasa.\n"
 #define MENU_2 "2 - Uzpilditi sarasa atsitiktinomis reiksmemis.\n"
-#define MENU_3 "3 - Atspausdinti turima sarasa.\n"
-#define MENU_4 "4 - Surasti sarase didziausia elementa ir ismesti ji.\n"
-#define MENU_5 "5 - Istrinti sarasa.\n"
-#define MENU_6 "6 - Iseiti is programos.\n"
+#define MENU_3 "3 - Uzpilditi sarasa reiksmemis is tekstinio failo (data.txt).\n"
+#define MENU_4 "4 - Atspausdinti turima sarasa.\n"
+#define MENU_5 "5 - Surasti sarase didziausia elementa ir ismesti ji.\n"
+#define MENU_6 "6 - Istrinti sarasa.\n"
+#define MENU_7 "7 - Iseiti is programos.\n"
 #define CHOICE "Pasirinktas veiksmas: "
 #define SUC_CH "Pasirinkimas sekmingai nuskaitytas.\n"
 #define ERR_CH "Netinkama ivestis. Iveskite skaiciu 1-6 atitinkanti jusu norima veiksma.\n"
@@ -29,9 +30,9 @@
 int menu(){
     int choice, validInput = 0;
     while(!validInput){
-        printf("%s%s%s%s%s%s%s", MENU_1, MENU_2, MENU_3, MENU_4, MENU_5, MENU_6, CHOICE);
+        printf("%s%s%s%s%s%s%s%s", MENU_1, MENU_2, MENU_3, MENU_4, MENU_5, MENU_6, MENU_7, CHOICE);
         if(scanf("%d", &choice) == 1 && (getchar()=='\n')){
-            if(choice >= 1 && choice <= 6){
+            if(choice >= 1 && choice <= 7){
                 printf("%s", SUC_CH);
                 validInput = 1;
             }
@@ -47,7 +48,6 @@ int menu(){
     printf("\n");
     return choice;
 }
-
 
 int main(){
     Node *start = NULL, *end = NULL;
@@ -108,6 +108,29 @@ int main(){
         
         case 3:
             if(start == NULL){
+                ReadList(&start, &end);
+            }
+            else{
+                printf("%s", FULL_LIST_QUESTION);
+                while(1){
+                    scanf("%c", &option);
+                    if(Validation(option)){
+                        ReadList(&start, &end);
+                        break;
+                    }
+                    else if(Validation(option) == -1){
+                        // Nieko nedarome
+                        break;
+                    }
+                    else{
+                        printf("%s", ONE_MORE_TRY);
+                    }
+                }
+            }
+            break;
+
+        case 4:
+            if(start == NULL){
                 printf("%s", NO_FULL_LIST);
             }
             else{
@@ -116,7 +139,7 @@ int main(){
             }
             break;
 
-        case 4:
+        case 5:
             if(start == NULL){
                 printf("%s", NO_FULL_LIST);
             }
@@ -126,12 +149,12 @@ int main(){
             }
             break;
 
-        case 5:
+        case 6:
             start = NULL;
             end = NULL;
             break;
 
-        case 6:
+        case 7:
             return 0;
         
         default:

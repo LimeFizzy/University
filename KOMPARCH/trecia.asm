@@ -383,7 +383,7 @@ RegDI:
 RegSP:
 	mov si, offset RegistSP
 	jmp Exit1
-;;;;;;;;;
+
 RegBXirSI:
 	mov si, offset RegistBXirSI
 	jmp Exit1
