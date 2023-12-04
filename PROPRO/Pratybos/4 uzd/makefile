@@ -1,16 +1,13 @@
 CC = gcc
 CFLAGS = -Wall -Werror
 
-TARGET = tests
+main:
+	$(CC) -o main main.c func.c
+	./main 
 
-$(TARGET): unit.o func.o
-	$(CC) $(CFLAGS) -o $(TARGET) unit.o func.o
-
-unit.o: unit.c func.h
-	$(CC) $(CFLAGS) -c unit.c
-
-func.o: func.c func.h
-	$(CC) $(CFLAGS) -c func.c
+test: unit.o func.o
+	$(CC) $(CFLAGS) -o test unit.o func.o
+	./test
 
 clean:
-	rm -f $(TARGET) *.o
+	rm -f test main *.o

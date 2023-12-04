@@ -27,7 +27,7 @@
 #define CONTINUE "Paspauskite ENTER, kad testi.\n"
 
 // Funkcija atspausdinanti meniu pasirinkimus 
-int menu(){
+int Menu(){
     int choice, validInput = 0;
     while(!validInput){
         printf("%s%s%s%s%s%s%s%s", MENU_1, MENU_2, MENU_3, MENU_4, MENU_5, MENU_6, MENU_7, CHOICE);
@@ -56,7 +56,7 @@ int main(){
     char option;
     printf("%s", WLC_MSG);
     while(1){
-        choice = menu();
+        choice = Menu();
         switch (choice)
         {
         case 1:

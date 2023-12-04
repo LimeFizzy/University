@@ -14,8 +14,8 @@ typedef struct Node {
 // Funkcija spausdinanti sarasa
 void PrintList(Node *head){
     if(head != NULL){
-        PrintList(head->next);
         printf("%d ", head->value);
+        PrintList(head->next);
     }
 }
 
@@ -85,25 +85,22 @@ void ReadList(Node **start, Node **end){
     FILE* data = fopen("data.txt", "r");
     Node *tempNode;
     int counter = 0;
-    int number, numArray[ARR_MAX];
+    int number, value;
     fscanf(data, "%d", &number);
     *start = NULL;
     *end = NULL;
 
-    for(int i = 0; i < number; ++i){
-        fscanf(data, "%d", &numArray[number - i - 1]);
-    }
-
     while(counter < number){
+        fscanf(data, "%d", &value);
         if(*start == NULL){
             tempNode = (Node *)malloc(sizeof(Node));
-            tempNode->value = numArray[counter];
+            tempNode->value = value;
             tempNode->next = NULL;
             *end = tempNode;
             *start = tempNode;
         } else {
             tempNode = (Node *)malloc(sizeof(Node));
-            tempNode->value = numArray[counter];
+            tempNode->value = value;
             tempNode->next = NULL;
             (*end)->next = tempNode;
             *end = tempNode;
