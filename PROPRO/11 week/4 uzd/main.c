@@ -6,8 +6,8 @@
 
 #define MAX_ARR 20
 
-int saveCount;
-int loadCount;
+int saveCount = 0;
+int loadCount = 0;
 
 void fillArray(int array[], int capacity){
     srand(time(NULL));
@@ -25,8 +25,6 @@ void printArray(int array[], int capacity){
 
 
 int main(){
-    saveCount = 0;
-    loadCount = 0;
     int *m1 = NULL, *m2 = NULL, *m3 = NULL;
     int cap;
     m1 = malloc(MAX_ARR * sizeof(int));

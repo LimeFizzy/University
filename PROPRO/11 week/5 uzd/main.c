@@ -3,6 +3,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
+#include <dlfcn.h>
 
 #define MAX_ARR 20
 
@@ -25,6 +26,19 @@ void printArray(int array[], int capacity){
 
 
 int main(){
+    void* libHandle = dlopen("./libfile.so", RTLD_LAZY);
+    if (!libHandle) {
+        fprintf(stderr, "Cannot open library: %s\n", dlerror());
+        return 1;
+    }
+
+    void (*printMessage)() = dlsym(libHandle, "printMessage");
+    if (!printMessage) {
+        fprintf(stderr, "Cannot load symbol 'printMessage': %s\n", dlerror());
+        dlclose(libHandle);
+        return 1;
+    }
+    
     int *m1 = NULL, *m2 = NULL, *m3 = NULL;
     int cap;
     m1 = malloc(MAX_ARR * sizeof(int));
@@ -35,14 +49,14 @@ int main(){
     fillArray(m2, MAX_ARR);
     fillArray(m3, MAX_ARR);
 
-    saveToFile(m1, MAX_ARR, "db1.bin", saveCount);
-    saveToFile(m3, MAX_ARR, "db1.bin", saveCount);
+    saveToFile(m1, MAX_ARR, "db1.bin", &saveCount);
+    saveToFile(m3, MAX_ARR, "db1.bin", &saveCount);
     
-    loadFromFile(m1, &cap, "db1.bin", loadCount);
+    loadFromFile(m1, &cap, "db1.bin", &loadCount);
     
-    saveToFile(m2, MAX_ARR, "db2.bin", saveCount);
-    loadFromFile(m3, &cap, "db2.bin", loadCount);
-    loadFromFile(m2, &cap, "db1.bin", loadCount);
+    saveToFile(m2, MAX_ARR, "db2.bin", &saveCount);
+    loadFromFile(m3, &cap, "db2.bin", &loadCount);
+    loadFromFile(m2, &cap, "db1.bin", &loadCount);
     
     if(saveCount == 3 && loadCount == 3){
         printf("all good\n");
@@ -53,6 +67,7 @@ int main(){
     free(m1);
     free(m2);
     free(m3);
+    dlclose(libHandle);
 
     return 0;
 }
