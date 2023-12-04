@@ -9,6 +9,7 @@ void saveToFile(int array[], int capacity, char *filename, int *saveCount){
             fwrite(&array[i], sizeof(int), 1, db);
         }
         (*saveCount)++;
+        
     }
     fclose(db);
     
