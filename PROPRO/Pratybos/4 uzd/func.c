@@ -139,7 +139,7 @@ void InitializeTestValues(Node **start, Node **end, int values[], int numValues)
 }
 
 // Testavimo funkcija
-int CompareListWithArray(Node *start, int arr[], int size) {
+int CompareListWithArray(Node *start, int arr[], int size){
     Node *current = start;
     int index = 0;
     while (current != NULL && index < size) {
