@@ -89,7 +89,6 @@ void ReadList(Node **start, Node **end){
     fscanf(data, "%d", &number);
     *start = NULL;
     *end = NULL;
-
     while(counter < number){
         fscanf(data, "%d", &value);
         if(*start == NULL){
@@ -119,4 +118,37 @@ int Validation(char x){
             return -1;
     }
     return 0;
+}
+
+// Funkcija reikalinga testavimui
+void InitializeTestValues(Node **start, Node **end, int values[], int numValues){
+    *start = NULL;
+    *end = NULL;
+    for (int i = 0; i < numValues; ++i) {
+        Node *tempNode = (Node *)malloc(sizeof(Node));
+        tempNode->value = values[i];
+        tempNode->next = NULL;
+        if (*start == NULL) {
+            *start = tempNode;
+            *end = tempNode;
+        } else {
+            (*end)->next = tempNode;
+            *end = tempNode;
+        }
+    }
+}
+
+// Testavimo funkcija
+int CompareListWithArray(Node *start, int arr[], int size) {
+    Node *current = start;
+    int index = 0;
+    while (current != NULL && index < size) {
+        if (current->value != arr[index]) {
+            // Tuo atveju jeigu reiksmes skyriasi
+            return 0;
+        }
+        current = current->next;
+        index++;
+    }
+    return (current == NULL && index == size);
 }

@@ -9,5 +9,8 @@ void DeleteMaxValue(Node **head, int num);
 void CreateList(Node **start, Node **end);
 void ReadList(Node **start, Node **end);
 int Validation(char x);
+void InitializeTestValues(Node **start, Node **end, int values[], int numValues);
+int CompareListWithArray(Node *start, int arr[], int size);
+
 
 #endif

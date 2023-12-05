@@ -2,43 +2,34 @@
 #include <assert.h>
 #include "func.h"
 
-void testFind() {
+int testValues[] = {10, 20, 30, 40, 50};
+int numTestValues = sizeof(testValues) / sizeof(testValues[0]);
+
+void testFind(){
     Node *start = NULL, *end = NULL;
-    ReadList(&start, &end);
-    assert(FindMaxValue(start) == 456);
+    InitializeTestValues(&start, &end, testValues, numTestValues);
+    assert(FindMaxValue(start) == 50);
 }
 
-void testDelete() {
+void testDelete(){
     Node *start = NULL, *end = NULL;
-    ReadList(&start, &end);
-    DeleteMaxValue(&start, 456);
-    printf("Tiketinas sarasas po didziausio elemento naikinimo: 45 90 12 12 1 56 32 99 123 78 56 1 2 9.\n");
-    printf("Duomenys kurius gavome: ");
-    PrintList(start);
-    printf("\n");
+    int newValues[4] = {10, 20, 30, 40};
+    int index = sizeof(newValues) / sizeof(newValues[0]);
+    InitializeTestValues(&start, &end, testValues, numTestValues);
+    DeleteMaxValue(&start, 50);
+    assert(CompareListWithArray(start, newValues, index));
 }
 
-void testRead() {
-    Node *start = NULL, *end = NULL;
-    ReadList(&start, &end);
-    printf("Tiketini duomenys is failo: 45 90 12 456 12 1 56 32 99 123 78 56 1 2 9.\n");
-    printf("Duomenys kurius gavome: ");
-    PrintList(start);
-    printf("\n");
-}
-
-void testValid() {
+void testValid(){
     assert(Validation('y') == 1);
     assert(Validation('n') == -1);
     assert(Validation(' ') == 0);
 }
 
-int main() {
+int main(){
     testFind();
     testDelete();
-    testRead();
     testValid();
-
     printf("Visi testai sekmingi.\n");
     return 0;
 }
