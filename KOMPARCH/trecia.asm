@@ -138,12 +138,8 @@
 	INT 21h
 	JMP pabaiga
 
-	;Jei INT buvo iškviestas prieš komandą MOV, tai tada dl registre suformuojame bito w reikšmę
 ReikMov:
-	MOV dl, 31h		;Šiuo atveju w bito nėra, bet galima laikyti, kad w=1, nes visada veiksmai atliekami su žodžio dydžio registrais
-
-	;Išvedame pranešimą ir bito w reikšmę
-Spausdink:
+	
 	MOV ah, 9
 	MOV dx, offset PranMOV
 	INT 21h
@@ -178,7 +174,7 @@ Spausdink:
 	je Dis0
 	pop dx
 	jmp Dis1
-Dis0: ; Ispradziu registras, po to segmentas
+Dis0: 						; Ispradziu registras, po to segmentas
 	pop dx
 	call ChooseRegister
 	push dx
@@ -206,7 +202,7 @@ Dis0: ; Ispradziu registras, po to segmentas
 	jmp Pabaiga
 
 
-Dis1: ; Ispradziu segmentas, po to registras
+Dis1: 						; Ispradziu segmentas, po to registras
 	call ChooseSegment
 	push dx
 
@@ -243,28 +239,26 @@ Pabaiga:
 				;paprastas RET netinka, nes per mažai informacijos išima iš steko
 ApdorokPertr ENDP
 
-Print PROC
+Print PROC				; Procedura atspausdinanti registro saugoma reiksme
     push bx
     mov bx, 10h
 
 Begin:
-    xor dx, dx        ; Clear dx before each division
-    div bx            ; Divide AX by 10h, quotient in AX, remainder in DX
-    ; Compare remainder with '9' to decide whether to print a number or a character
-    cmp dx, 9
-    jbe Num      ; Jump if less than or equal to '9'
-    add dl, 'A' - 10  ; Convert remainder to ASCII for letters
+    xor dx, dx
+    div bx				; Dalinam ax is 10h
+    cmp dx, 9			; dx saugoja liekana po dalybos
+    jbe Num      		; jeigu liekana maziau uz 9 -> tai skaicius
+    add dl, 'A' - 10  	; konvertuojame raide i jos ASCII koda
 	jmp Continue
 
 Num:
-    add dl, '0'       ; Convert remainder to ASCII for numbers
+    add dl, '0'       	; konvertuojame skaiciu i jo ASCII koda
 Continue:
-	push dx
+	push dx				; ipushinam reiksmes i steka tam, kad apversti reiksmes
 	loop Begin
 
 	mov cx, 4
-PrintReg:
-    ; Print the current character
+PrintReg:				; spausdiname reiksmes
     mov ah, 2
 	pop dx
     int 21h
@@ -280,9 +274,9 @@ Print ENDP
 ChooseSegment PROC
 	push bx
 	mov bx, dx
-	AND bx, 0018h
+	AND bx, 0018h		; visi bitai isskirus sr nunulinami
 
-	cmp bx, 0000h
+	cmp bx, 0000h		; lyginam likusius bitus ir nustatom kuris segmento registras reikalingas
 	je SaveES
 	cmp bx, 0008h
 	je SaveCS
@@ -292,7 +286,7 @@ ChooseSegment PROC
 	je SaveDS
 
 	jmp Exit
-SaveDS:
+SaveDS:					; issaugome i si tekstines eilutes adresu su reikiamu segmentu
 	mov si, offset SegmDS
 	jmp Exit
 
@@ -317,9 +311,10 @@ ChooseSegment ENDP
 ChooseRegister PROC
 	push bx
 	mov bx, dx
-	AND bx, 00C7h
-; jeigu mod = 11
-	cmp bx, 00C0h
+	AND bx, 00C7h		; visi bitai isskirus mod ir r/m nunulinami
+
+	; jeigu mod = 11
+	cmp bx, 00C0h		; ieskomas tinkamas variantas
 	je RegAX
 	cmp bx, 00C1h
 	je RegCX
@@ -336,7 +331,7 @@ ChooseRegister PROC
 	cmp bx, 00C7h
 	je RegDI
 
-; jeigu mod = 00
+	; jeigu mod = 00
 	cmp bx, 0000h
 	je RegBXirSI
 	cmp bx, 0001h
@@ -352,7 +347,7 @@ ChooseRegister PROC
 	cmp bx, 0007h
 	je RegBX
 
-RegAX:
+RegAX:					; issaugome i si tekstines eilutes adresu su reikiamu segmentu
 	mov si, offset RegistAX
 	jmp Exit1
 
