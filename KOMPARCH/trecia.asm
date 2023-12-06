@@ -1,10 +1,3 @@
-; Savo darbo pradžioje programa turi išvesti trumpą aprašymą: autorių ir ką ji daro. Komandinės eilutės parametrų apdoroti nebūtina.
-; Programa turi apdoroti programos variante nurodytą pertraukimą:
-; Įsiminti esamą pertraukimo apdorojimo procedūros adresą;
-; Į pertraukimo vektorių lentelę įrašyti Jūsų parašytos pertraukimo apdorojimo procedūros adresą;
-; Atlikti keletą operacijų, kurių metu gali kilti pertraukimas;
-; Atstatyti buvusį pertraukimo apdorojimo procedūros adresą;
-
 ; ******************************************************************************************
 ; 4. Žingsninio režimo pertraukimo (int 1) apdorojimo procedūra, atpažįstanti komandą MOV r/m<=sreg. 
 ; Ši procedūra turi patikrinti, ar pertraukimas įvyko prieš vykdant komandos MOV šeštąjį variantą, jei taip, į ekraną išvesti perspėjimą, ir visą informaciją apie komandą: adresą, kodą, mnemoniką, operandus.
@@ -12,16 +5,16 @@
 ; ******************************************************************************************
 
 ;***************************************************************
-; Programa, perrašanti 1 pertraukimo apdorojimo procedūrą; procedūra atpažįsta komandą MOV ir išveda į ekraną jos bitą w
+; Programa, perrašanti 1 pertraukimo apdorojimo procedūrą; procedūra atpažįsta komandą MOV r/m<=sreg ir išveda į ekraną adresą, kodą, mnemoniką ir operandus.
 ;***************************************************************
 
 ; 1000 11d0 mod 0sr r/m [poslinkis]
-; 0000 0000 1100 0111  - 00C8h
 .model small
 
 .stack 100h
 
 .data
+	PradPran db "Aut. - Leonardas Sinkevicius. Programa atpazista MOV reg <=r/m komanda, apdoroja ja su INT 1.", 13, 10, "$"
 	PranMOV	db "Zingsninio rezimo pertraukimas! $"
 	Enteris db 13, 10, "$"
 	PranNe	db "Komanda ne MOV r/m<=sreg.", 13, 10, "$"
@@ -37,17 +30,22 @@
 	RegistSP db "SP$"
 	RegistBP db "BP$"
 	RegistSI db "SI$"
-	RegistDI db "Di$"
+	RegistDI db "DI$"
 	RegistBXirSI db "[BX+SI]$"
 	RegistBXirDI db "[BX+DI]$"
 	RegistBPirSI db "[BP+SI]$"
 	RegistBPirDI db "[BP+DI]$"
 	Next db ", $"
+	SemiColon db " ; $"
 
 .code
   Pradzia:
 	MOV	ax, @data	;reikalinga kiekvienos programos pradžioj
 	MOV	ds, ax		;reikalinga kiekvienos programos pradžioj
+
+	MOV	ah, 09h			;DOS funkcijos numeris
+	MOV	dx, offset PradPran
+	INT	21h
 
 ;****************************************************************************
 ; Nusistatom reikalingas registrų reikšmes
@@ -110,6 +108,7 @@
 	;Įdedame registrų reikšmes į steką
 	PUSH	ax
 	PUSH	bx
+	PUSH 	cx
 	PUSH	dx
 	PUSH	bp
 	PUSH	es
@@ -121,7 +120,7 @@
 
 	;Į registrą DL įsirašom komandos, prieš kurią buvo iškviestas INT, operacijos kodą
 	MOV bp, sp			;Darbui su steku patogiausia naudoti registrq BP
-	ADD bp, 12			;Suskaičiuojame kaip giliai steke yra įdėtas grįžimo adresas
+	ADD bp, 14			;Suskaičiuojame kaip giliai steke yra įdėtas grįžimo adresas
 	MOV bx, [bp]		;Į bx įdedame grįžimo adreso poslinkį nuo segmento pradžios (IP)
 	MOV es, [bp+2]		;Į es įdedame grįžimo adreso segmentą (CS)
 	MOV dl, [es:bx]		;Išimame pirmąjį baitą, esantį grįžimo adresu - komandos OPK
@@ -195,6 +194,8 @@ Dis0: 						; Ispradziu registras, po to segmentas
 	mov ah, 9
 	mov dx, si
 	int 21h
+	mov dx, offset SemiColon
+	int 21h
 	
 	MOV ah, 9
 	MOV dx, offset enteris
@@ -222,6 +223,8 @@ Dis1: 						; Ispradziu segmentas, po to registras
 	mov ah, 9
 	mov dx, si
 	int 21h
+	mov dx, offset SemiColon
+	int 21h
 	
 	MOV ah, 9
 	MOV dx, offset enteris
@@ -233,10 +236,11 @@ Pabaiga:
 	POP es
 	POP bp
 	POP	dx
+	POP cx
 	POP bx
 	POP	ax
-	IRET			;pabaigoje būtina naudoti grįžimo iš pertraukimo apdorojimo procedūros komandą IRET
-				;paprastas RET netinka, nes per mažai informacijos išima iš steko
+	IRET				;pabaigoje būtina naudoti grįžimo iš pertraukimo apdorojimo procedūros komandą IRET
+						;paprastas RET netinka, nes per mažai informacijos išima iš steko
 ApdorokPertr ENDP
 
 Print PROC				; Procedura atspausdinanti registro saugoma reiksme
@@ -309,42 +313,42 @@ ChooseSegment ENDP
 
 
 ChooseRegister PROC
-	push bx
-	mov bx, dx
-	AND bx, 00C7h		; visi bitai isskirus mod ir r/m nunulinami
+	push cx
+	mov cx, dx
+	AND cx, 00C7h		; visi bitai isskirus mod ir r/m nunulinami
 
 	; jeigu mod = 11
-	cmp bx, 00C0h		; ieskomas tinkamas variantas
+	cmp cx, 00C0h		; ieskomas tinkamas variantas
 	je RegAX
-	cmp bx, 00C1h
+	cmp cx, 00C1h
 	je RegCX
-	cmp bx, 00C2h
+	cmp cx, 00C2h
 	je RegDX
-	cmp bx, 00C3h
+	cmp cx, 00C3h
 	je RegBX
-	cmp bx, 00C4h
+	cmp cx, 00C4h
 	je RegSP
-	cmp bx, 00C5h
+	cmp cx, 00C5h
 	je RegBP
-	cmp bx, 00C6h
+	cmp cx, 00C6h
 	je RegSI
-	cmp bx, 00C7h
+	cmp cx, 00C7h
 	je RegDI
 
 	; jeigu mod = 00
-	cmp bx, 0000h
+	cmp cx, 0000h
 	je RegBXirSI
-	cmp bx, 0001h
+	cmp cx, 0001h
 	je RegBXirDI
-	cmp bx, 0002h
+	cmp cx, 0002h
 	je RegBPirSI
-	cmp bx, 0003h
+	cmp cx, 0003h
 	je RegBPirDI
-	cmp bx, 0004h
+	cmp cx, 0004h
 	je RegSI
-	cmp bx, 0005h
+	cmp cx, 0005h
 	je RegDI
-	cmp bx, 0007h
+	cmp cx, 0007h
 	je RegBX
 
 RegAX:					; issaugome i si tekstines eilutes adresu su reikiamu segmentu
@@ -396,7 +400,7 @@ RegBPirDI:
 	jmp Exit1
 
 Exit1:
-	pop bx
+	pop cx
 	ret
 ChooseRegister ENDP
 
