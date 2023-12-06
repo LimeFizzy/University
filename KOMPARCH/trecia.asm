@@ -14,7 +14,7 @@
 .stack 100h
 
 .data
-	PradPran db "Aut. - Leonardas Sinkevicius. Programa atpazista MOV reg <=r/m komanda, apdoroja ja su INT 1.", 13, 10, "$"
+	PradPran db "Aut. - Leonardas Sinkevicius.", 13, 10, "Programa atpazista MOV reg <=r/m komanda, apdoroja ja su INT 1.", 13, 10, "$"
 	PranMOV	db "Zingsninio rezimo pertraukimas! $"
 	Enteris db 13, 10, "$"
 	PranNe	db "Komanda ne MOV r/m<=sreg.", 13, 10, "$"
@@ -35,6 +35,14 @@
 	RegistBXirDI db "[BX+DI]$"
 	RegistBPirSI db "[BP+SI]$"
 	RegistBPirDI db "[BP+DI]$"
+	RegistBXirSIposl db "[BX+SI+poslinkis]$"
+	RegistBXirDIposl db "[BX+DI+poslinkis]$"
+	RegistBPirSIposl db "[BP+SI+poslinkis]$"
+	RegistBPirDIposl db "[BP+DI+poslinkis]$"
+	RegistBXposl db "[BX+poslinkis]$"
+	RegistBPposl db "[BP+poslinkis]$"
+	RegistSIposl db "[SI+poslinkis]$"
+	RegistDIposl db "[DI+poslinkis]$"
 	Next db ", $"
 	SemiColon db " ; $"
 
@@ -85,6 +93,8 @@
 	mov ds, di
 	mov ds, [BX+SI]
 	mov [bx+si], ds
+	mov ds, [bx+si+5]
+	
 	MOV	al, 22h		;Šitą komandą nagrinės pertraukimo apdorojimo procedūra
 	INC ax			;Šitą komandą nagrinės pertraukimo apdorojimo procedūra
 	
@@ -127,7 +137,7 @@
 	
 	;Tikriname, ar INT buvo iškviestas prieš komandą MOV
 	MOV al, dl
-	AND al, 0FDh		;Tikriname pagal pirmus 6 bitus ir paskutinįjį bitą
+	AND al, 0FDh		;1111 1101 Tikriname pagal pirmus 6 bitus ir paskutinįjį bitą
 	CMP al, 8Ch			;Ar tai MOV registras / atmintis <--> segmento registras - 1000 11d0
 	JE	ReikMov
 	
@@ -144,13 +154,11 @@ ReikMov:
 	INT 21h
 	
 	mov ax, es
-	mov cx, 4
 	call Print
 	mov ah, 2
 	mov dx, ':'
 	int 21h
 	mov ax, bx
-	mov cx, 4
 	call Print
 
 	mov ah, 2
@@ -163,7 +171,6 @@ ReikMov:
 	
 	push dx
 	mov ax, dx
-	mov cx, 4
 	call Print
 	pop dx
 
@@ -245,6 +252,7 @@ ApdorokPertr ENDP
 
 Print PROC				; Procedura atspausdinanti registro saugoma reiksme
     push bx
+	mov cx, 4
     mov bx, 10h
 
 Begin:
@@ -350,6 +358,7 @@ ChooseRegister PROC
 	je RegDI
 	cmp cx, 0007h
 	je RegBX
+	jmp SuPosl
 
 RegAX:					; issaugome i si tekstines eilutes adresu su reikiamu segmentu
 	mov si, offset RegistAX
@@ -397,6 +406,75 @@ RegBPirSI:
 
 RegBPirDI:
 	mov si, offset RegistBPirDI
+	jmp Exit1
+
+SuPosl:
+	; jeigu mod = 01
+	cmp cx, 0040h
+	je RegBXirSIposl
+	cmp cx, 0041h
+	je RegBXirDIposl
+	cmp cx, 0042h
+	je RegBPirSIposl
+	cmp cx, 0043h
+	je RegBPirDIposl
+	cmp cx, 0044h
+	je RegSIposl
+	cmp cx, 0045h
+	je RegDIposl
+	cmp cx, 0046h
+	je RegBPposl
+	cmp cx, 0047h
+	je RegBXposl
+
+	; jeigu mod = 10
+	cmp cx, 0080h
+	je RegBXirSIposl
+	cmp cx, 0081h
+	je RegBXirDIposl
+	cmp cx, 0082h
+	je RegBPirSIposl
+	cmp cx, 0083h
+	je RegBPirDIposl
+	cmp cx, 0084h
+	je RegSIposl
+	cmp cx, 0085h
+	je RegDIposl
+	cmp cx, 0086h
+	je RegBPposl
+	cmp cx, 0087h
+	je RegBXposl
+
+RegBXirSIposl:
+	mov si, offset RegistBXirSIposl
+	jmp Exit1
+
+RegBXirDIposl:
+	mov si, offset RegistBXirDIposl
+	jmp Exit1
+
+RegBPirSIposl:
+	mov si, offset RegistBPirSIposl
+	jmp Exit1
+
+RegBPirDIposl:
+	mov si, offset RegistBPirDIposl
+	jmp Exit1
+
+RegBPposl:
+	mov si, offset RegistBPposl
+	jmp Exit1
+
+RegSIposl:
+	mov si, offset RegistSIposl
+	jmp Exit1
+
+RegDIposl:
+	mov si, offset RegistDIposl
+	jmp Exit1
+
+RegBXposl:
+	mov si, offset RegistBXposl
 	jmp Exit1
 
 Exit1:
