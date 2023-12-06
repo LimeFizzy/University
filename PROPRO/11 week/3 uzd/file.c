@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "file.h"
 
 int saveCount = 0;
 int loadCount = 0;

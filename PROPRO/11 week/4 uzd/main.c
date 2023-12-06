@@ -6,9 +6,6 @@
 
 #define MAX_ARR 20
 
-int saveCount = 0;
-int loadCount = 0;
-
 void fillArray(int array[], int capacity){
     srand(time(NULL));
     for(int i = 0; i < capacity; ++i){
@@ -35,14 +32,14 @@ int main(){
     fillArray(m2, MAX_ARR);
     fillArray(m3, MAX_ARR);
 
-    saveToFile(m1, MAX_ARR, "db1.bin", &saveCount);
-    saveToFile(m3, MAX_ARR, "db1.bin", &saveCount);
+    saveToFile(m1, MAX_ARR, "db1.bin");
+    saveToFile(m3, MAX_ARR, "db1.bin");
     
-    loadFromFile(m1, &cap, "db1.bin", &loadCount);
+    loadFromFile(m1, &cap, "db1.bin");
     
-    saveToFile(m2, MAX_ARR, "db2.bin", &saveCount);
-    loadFromFile(m3, &cap, "db2.bin", &loadCount);
-    loadFromFile(m2, &cap, "db1.bin", &loadCount);
+    saveToFile(m2, MAX_ARR, "db2.bin");
+    loadFromFile(m3, &cap, "db2.bin");
+    loadFromFile(m2, &cap, "db1.bin");
     
     if(saveCount == 3 && loadCount == 3){
         printf("all good\n");
@@ -50,9 +47,5 @@ int main(){
     else{
         printf("something's wrong\n");
     }
-    free(m1);
-    free(m2);
-    free(m3);
-
     return 0;
 }
